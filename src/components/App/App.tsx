@@ -1,10 +1,11 @@
 import React from 'react'
+import Layout from '../../ui/Layout/Layout'
 // import cls from './App.module.css'
 
 const App = () => (
-  <div>
+  <Layout>
     <h1>TS React Quiz app</h1>
-  </div>
+  </Layout>
 )
 
 export default App
