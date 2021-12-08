@@ -4,6 +4,6 @@ import App from './App'
 
 test('renders Heading H1 correctly', () => {
   render(<App />)
-  const headingElem = screen.getByText(/React app/i)
+  const headingElem = screen.getByText(/TS React Quiz app/i)
   expect(headingElem).toBeInTheDocument()
 })

@@ -3,7 +3,7 @@ import React from 'react'
 
 const App = () => (
   <div>
-    <h1>React app</h1>
+    <h1>TS React Quiz app</h1>
   </div>
 )
 
