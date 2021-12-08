@@ -1,0 +1,30 @@
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  display: flex;
+  width: 100%;
+  min-height: 150px;
+  height: 100%;
+
+  /* background-color: hsla(0, 0%, 0%, 0.5); */
+}
+
+.icon {
+  width: 50%;
+  height: auto;
+  max-height: 70%;
+  margin: auto;
+  animation: rotate 5s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
