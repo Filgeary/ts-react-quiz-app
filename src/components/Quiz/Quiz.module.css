@@ -1,0 +1,14 @@
+.wrapper {
+  display: grid;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  padding: 20px 0 70px;
+  color: #fff;
+}
+
+.heading {
+  font-size: 1.8rem;
+  text-align: center;
+  font-style: italic;
+}
