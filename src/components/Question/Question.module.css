@@ -1,0 +1,19 @@
+.wrapper {
+  width: 80%;
+  margin: 0 auto;
+  padding: 40px;
+  color: #000;
+  border: 2px solid #fff;
+  border-radius: 5px;
+}
+
+.content {
+  display: grid;
+  gap: 10px;
+}
+
+.headingWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
