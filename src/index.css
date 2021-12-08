@@ -98,7 +98,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #404040;
+  color: #fff;
+  background: linear-gradient(90deg, #5041b2 0%, #7969e6 100%);
 }
 
 img {
