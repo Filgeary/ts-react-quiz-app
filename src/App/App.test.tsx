@@ -2,8 +2,10 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import App from './App'
 
-test('renders Heading H1 correctly', () => {
+test('renders Heading correctly', () => {
   render(<App />)
-  const headingElem = screen.getByText(/TS React Quiz app/i)
-  expect(headingElem).toBeInTheDocument()
+
+  expect(
+    screen.getByRole('heading', { name: /ts react quiz app/i }),
+  ).toBeInTheDocument()
 })
