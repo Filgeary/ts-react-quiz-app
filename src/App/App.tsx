@@ -1,8 +1,8 @@
 import React from 'react'
-import Layout from '../../ui/Layout/Layout'
-import Quiz from '../Quiz/Quiz'
-import { IQuiz } from '../../models'
-import { _mockQuizzes } from '../../_mocks/_mockQuizzes'
+import Layout from '../ui/Layout/Layout'
+import Quiz from '../components/Quiz/Quiz'
+import { IQuiz } from '../models'
+import { _mockQuizzes } from '../_mocks/_mockQuizzes'
 
 const quizzesData: IQuiz[] = _mockQuizzes
 
