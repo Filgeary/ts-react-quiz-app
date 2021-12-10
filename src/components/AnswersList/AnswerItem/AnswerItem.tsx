@@ -1,4 +1,9 @@
 import React from 'react'
 import cls from './AnswerItem.module.css'
+import { IQuizAnswer } from '../../../models'
 
-export const AnswerItem = () => <li className={cls.item}>1</li>
+type AnswerItemProps = Pick<IQuizAnswer, 'title'>
+
+export const AnswerItem = ({ title }: AnswerItemProps) => (
+  <li className={cls.item}>{title}</li>
+)

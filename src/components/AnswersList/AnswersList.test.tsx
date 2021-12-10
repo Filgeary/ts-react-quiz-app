@@ -1,9 +1,15 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import AnswersList from './AnswersList'
+import { _mockQuizzes } from '../../_mocks/_mockQuizzes'
 
-test('renders Heading correctly', () => {
-  render(<AnswersList />)
-  const heading = screen.getByRole('heading', { name: /answers options/i })
-  expect(heading).toBeInTheDocument()
+const { answers } = _mockQuizzes[0]
+
+test('renders default mocked data correctly', () => {
+  render(<AnswersList answers={answers} />)
+
+  expect(
+    screen.getByRole('heading', { name: /answers options/i }),
+  ).toBeInTheDocument()
+  expect(screen.getAllByRole('listitem')).toHaveLength(4)
 })

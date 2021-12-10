@@ -1,4 +1,4 @@
-interface IQuizAnswer {
+export interface IQuizAnswer {
   title: string
   isValid: boolean
 }
