@@ -1,9 +1,15 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import Question from './Question'
+import { _mockQuizzes } from '../../_mocks/_mockQuizzes'
 
-test('renders Heading correctly', () => {
-  render(<Question />)
-  const headingElem = screen.getByText(/question/i)
-  expect(headingElem).toBeInTheDocument()
+const { id, question } = _mockQuizzes[0]
+
+test('renders default mocked data correctly', () => {
+  render(<Question id={id} question={question} />)
+
+  expect(
+    screen.getByRole('heading', { name: /question 1/i }),
+  ).toBeInTheDocument()
+  expect(screen.getByText(/mock question 1/i)).toBeInTheDocument()
 })
