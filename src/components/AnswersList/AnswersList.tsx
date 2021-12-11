@@ -10,10 +10,10 @@ const AnswersList = ({ answers }: AnswersListProps) => (
     <h3>Answers Options</h3>
 
     <ul className={cls.list}>
-      {answers?.map((item, idx) => {
-        const { title } = item
+      {answers?.map(item => {
+        const { id, title } = item
 
-        return <AnswerItem key={idx} title={title} />
+        return <AnswerItem key={id} title={title} />
       })}
     </ul>
   </section>
