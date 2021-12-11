@@ -1,10 +1,11 @@
 export interface IQuizAnswer {
+  id: number
   title: string
-  isValid: boolean
 }
 
 export interface IQuiz {
   id: number
   question: string
+  correctAnswerID: number
   answers: IQuizAnswer[]
 }

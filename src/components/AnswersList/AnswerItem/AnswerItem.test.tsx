@@ -9,5 +9,5 @@ test('renders default mocked data correctly', () => {
   render(<AnswerItem title={title} />)
 
   expect(screen.getByRole('listitem')).toBeInTheDocument()
-  expect(screen.getByText(/option1/i)).toBeInTheDocument()
+  expect(screen.getByText(/answer 1.1/i)).toBeInTheDocument()
 })
