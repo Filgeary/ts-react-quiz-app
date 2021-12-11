@@ -1,22 +1,35 @@
 import React from 'react'
 import cls from './AnswersList.module.css'
-import { AnswerItem } from './AnswerItem/AnswerItem'
-import { IQuiz } from '../../models'
+import AnswerItem from './AnswerItem/AnswerItem'
+import { IQuizAnswer } from '../../models'
 
-type AnswersListProps = Pick<IQuiz, 'answers'>
+type AnswersListProps = {
+  answers: IQuizAnswer[]
+  onChangeAnswer: (id: number) => void
+}
 
-const AnswersList = ({ answers }: AnswersListProps) => (
-  <section className={cls.content}>
-    <h3>Answers Options</h3>
+const AnswersList = (props: AnswersListProps) => {
+  const { answers, onChangeAnswer } = props
 
-    <ul className={cls.list}>
-      {answers?.map(item => {
-        const { id, title } = item
+  return (
+    <section className={cls.content}>
+      <h3>Answers Options</h3>
 
-        return <AnswerItem key={id} title={title} />
-      })}
-    </ul>
-  </section>
-)
+      <ul className={cls.list}>
+        {answers?.map(answer => {
+          const { id } = answer
+
+          return (
+            <AnswerItem
+              key={id}
+              answer={answer}
+              onChangeAnswer={onChangeAnswer}
+            />
+          )
+        })}
+      </ul>
+    </section>
+  )
+}
 
 export default AnswersList

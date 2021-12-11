@@ -15,9 +15,15 @@ const Quiz = ({ data }: QuizProps) => {
     setQuizzes(data)
   }, [data])
 
+  const handleChangeAnswer = (id: number): void => {
+    // TODO: replace later
+    console.log(id)
+  }
+
   if (!quizzes) {
     return <p>Loading...</p>
   }
+
   const { id, question, answers } = quizzes[0]
 
   return (
@@ -26,7 +32,7 @@ const Quiz = ({ data }: QuizProps) => {
 
       <article className={cls.content}>
         <Question id={id} question={question} />
-        <AnswersList answers={answers} />
+        <AnswersList answers={answers} onChangeAnswer={handleChangeAnswer} />
       </article>
     </div>
   )

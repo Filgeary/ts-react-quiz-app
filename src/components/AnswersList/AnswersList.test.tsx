@@ -6,7 +6,8 @@ import { _mockQuizzes } from '../../_mocks/_mockQuizzes'
 const { answers } = _mockQuizzes[0]
 
 test('renders default mocked data correctly', () => {
-  render(<AnswersList answers={answers} />)
+  const mockFn = jest.fn()
+  render(<AnswersList answers={answers} onChangeAnswer={mockFn} />)
 
   expect(
     screen.getByRole('heading', { name: /answers options/i }),
