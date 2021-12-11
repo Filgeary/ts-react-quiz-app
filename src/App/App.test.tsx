@@ -2,7 +2,21 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import App from './App'
 
-test('renders Heading correctly', () => {
+// sometimes we have to include props that are not really important for a test
+// TypeScript utility types can help with that :)
+//
+// type ComponentProps = React.ComponentProps<typeof Component>;
+//
+// const baseProps: ComponentProps = {
+//   onClick: () => {},
+//   id: 1
+// };
+//
+// function renderUI(props: Partial<ComponentProps> = {}) {
+//   return render(<Component {...baseProps} {...props} />);
+// }
+
+test('renders default appearance with mocked data', () => {
   render(<App />)
 
   expect(

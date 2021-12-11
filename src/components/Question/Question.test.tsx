@@ -5,7 +5,7 @@ import { _mockQuizzes } from '../../_mocks/_mockQuizzes'
 
 const { id, question } = _mockQuizzes[0]
 
-test('renders default mocked data correctly', () => {
+test('renders default appearance with mocked data', () => {
   render(<Question id={id} question={question} />)
 
   expect(
