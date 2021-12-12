@@ -22,4 +22,9 @@ test('renders default appearance with mocked data', () => {
   expect(
     screen.getByRole('heading', { name: /ts react quiz app/i }),
   ).toBeInTheDocument()
+  expect(
+    screen.getByRole('heading', {
+      name: /can you try the quiz\?/i,
+    }),
+  ).toBeInTheDocument()
 })

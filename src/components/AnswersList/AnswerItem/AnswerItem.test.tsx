@@ -13,12 +13,13 @@ test('renders default appearance with mocked data', () => {
   expect(screen.getByText(/answer 1.1/i)).toBeInTheDocument()
 })
 
-describe('Event', () => {
-  test('click 1 time on onChangeAnswer', () => {
-    const onChange = jest.fn()
-    render(<AnswerItem answer={answer} onChangeAnswer={onChange} />)
+describe('Events', () => {
+  const mockChangeAnswer = jest.fn()
+
+  test('click correct times on onChangeAnswer', () => {
+    render(<AnswerItem answer={answer} onChangeAnswer={mockChangeAnswer} />)
 
     userEvent.click(screen.getByText(/answer 1.1/i))
-    expect(onChange).toBeCalledTimes(1)
+    expect(mockChangeAnswer).toBeCalledTimes(1)
   })
 })

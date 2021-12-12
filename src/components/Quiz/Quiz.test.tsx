@@ -16,10 +16,7 @@ test('renders default appearance with mocked data', () => {
   expect(
     screen.getByRole('heading', { name: /question 1/i }),
   ).toBeInTheDocument()
-  expect(screen.getByText(/mock question 1/i)).toBeInTheDocument()
   expect(
     screen.getByRole('heading', { name: /answers options/i }),
   ).toBeInTheDocument()
-  expect(screen.getAllByRole('listitem')).toHaveLength(4)
-  expect(screen.getByText(/answer 1.1/i)).toBeInTheDocument()
 })

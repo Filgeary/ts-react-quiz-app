@@ -14,14 +14,19 @@ test('renders default appearance with mocked data', () => {
   ).toBeInTheDocument()
   expect(screen.getAllByRole('listitem')).toHaveLength(4)
   expect(screen.getByText(/answer 1.1/i)).toBeInTheDocument()
+  expect(screen.getByText(/answer 1.4/i)).toBeInTheDocument()
 })
 
-describe('Event', () => {
-  test('click 1 time on onChangeAnswer', () => {
-    const onChange = jest.fn()
-    render(<AnswersList answers={answers} onChangeAnswer={onChange} />)
+describe('Events', () => {
+  const mockChangeAnswer = jest.fn()
+
+  test('click correct times on onChangeAnswer', () => {
+    render(<AnswersList answers={answers} onChangeAnswer={mockChangeAnswer} />)
 
     userEvent.click(screen.getByText(/answer 1.1/i))
-    expect(onChange).toBeCalledTimes(1)
+    expect(mockChangeAnswer).toBeCalledTimes(1)
+
+    userEvent.click(screen.getByText(/answer 1.4/i))
+    expect(mockChangeAnswer).toBeCalledTimes(2)
   })
 })
