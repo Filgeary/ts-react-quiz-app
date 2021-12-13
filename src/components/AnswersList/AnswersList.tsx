@@ -5,11 +5,12 @@ import { IQuizAnswer } from '../../models'
 
 type AnswersListProps = {
   answers: IQuizAnswer[]
+  answerValue: Record<string, 'right' | 'wrong'> | null
   onChangeAnswer: (id: number) => void
 }
 
 const AnswersList = (props: AnswersListProps) => {
-  const { answers, onChangeAnswer } = props
+  const { answers, answerValue, onChangeAnswer } = props
 
   return (
     <section className={cls.content}>
@@ -23,6 +24,7 @@ const AnswersList = (props: AnswersListProps) => {
             <AnswerItem
               key={id}
               answer={answer}
+              answerValue={answerValue ? answerValue[id] : ''}
               onChangeAnswer={onChangeAnswer}
             />
           )

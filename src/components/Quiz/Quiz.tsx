@@ -7,24 +7,37 @@ import { IQuiz } from '../../models'
 type QuizProps = {
   data: IQuiz[]
 }
+type AnswerValue = Record<string, 'right' | 'wrong'> | null
 
 const Quiz = ({ data }: QuizProps) => {
   const [quizzes, setQuizzes] = useState<IQuiz[] | null>(null)
   const [quizCount, setQuizCount] = useState(0)
+  const [answerValue, setAnswerValue] = useState<AnswerValue>(null)
 
   useEffect(() => {
     setQuizzes(data)
   }, [data])
 
-  const handleChangeAnswer = (id: number): void => {
-    // TODO: replace later
-    console.log(id)
-    setQuizCount(quizCount + 1)
+  const isCorrectAnswer = (answerId: number) => {
+    return quizzes?.[quizCount].correctAnswerID === answerId
   }
 
-  if (!quizzes) {
-    return <p>Loading...</p>
+  const handleChangeAnswer = (answerId: number): void => {
+    if (isCorrectAnswer(answerId)) {
+      setAnswerValue({ [answerId]: 'right' })
+
+      const timerId = setTimeout(() => {
+        setQuizCount(quizCount + 1)
+        setAnswerValue(null)
+        clearTimeout(timerId)
+      }, 1000)
+    } else {
+      setAnswerValue({ [answerId]: 'wrong' })
+    }
   }
+
+  if (!quizzes) return <p>Oops...</p>
+  if (quizCount === quizzes.length) return <p>Finished!</p>
 
   const { id, question, answers } = quizzes[quizCount]
 
@@ -34,7 +47,11 @@ const Quiz = ({ data }: QuizProps) => {
 
       <article className={cls.content}>
         <Question id={id} question={question} quizzesLength={quizzes.length} />
-        <AnswersList answers={answers} onChangeAnswer={handleChangeAnswer} />
+        <AnswersList
+          answers={answers}
+          answerValue={answerValue}
+          onChangeAnswer={handleChangeAnswer}
+        />
       </article>
     </div>
   )

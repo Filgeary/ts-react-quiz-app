@@ -7,7 +7,13 @@ import userEvent from '@testing-library/user-event'
 const { answers } = _mockQuizzes[0]
 
 test('renders default appearance with mocked data', () => {
-  render(<AnswersList answers={answers} onChangeAnswer={() => {}} />)
+  render(
+    <AnswersList
+      answers={answers}
+      answerValue={null}
+      onChangeAnswer={() => {}}
+    />,
+  )
 
   expect(
     screen.getByRole('heading', { name: /answers options/i }),
@@ -21,7 +27,13 @@ describe('Events', () => {
   const mockChangeAnswer = jest.fn()
 
   test('click correct times on onChangeAnswer', () => {
-    render(<AnswersList answers={answers} onChangeAnswer={mockChangeAnswer} />)
+    render(
+      <AnswersList
+        answers={answers}
+        answerValue={null}
+        onChangeAnswer={mockChangeAnswer}
+      />,
+    )
 
     userEvent.click(screen.getByText(/answer 1.1/i))
     expect(mockChangeAnswer).toBeCalledTimes(1)
