@@ -2,8 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import ErrorMessage from './ErrorMessage'
 
-test('renders Error description correctly', () => {
+test('renders Error description', () => {
   render(<ErrorMessage />)
-  const textElem = screen.getByText(/Oops! Something Wrong!/i)
-  expect(textElem).toBeInTheDocument()
+  expect(screen.getByText(/oops! something wrong!/i)).toBeInTheDocument()
 })

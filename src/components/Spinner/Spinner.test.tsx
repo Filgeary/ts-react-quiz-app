@@ -2,8 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import Spinner from './Spinner'
 
-test('renders Spinner icon correctly', () => {
+test('renders Spinner icon', () => {
   render(<Spinner />)
-  const iconElem = screen.getByAltText(/spinner-icon/i)
-  expect(iconElem).toBeInTheDocument()
+  expect(screen.getByAltText(/spinner-icon/i)).toBeInTheDocument()
 })
