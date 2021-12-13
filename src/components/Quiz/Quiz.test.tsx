@@ -3,10 +3,8 @@ import { render, screen } from '@testing-library/react'
 import Quiz from './Quiz'
 import { _mockQuizzes } from '../../_mocks/_mockQuizzes'
 
-const quizzesData = _mockQuizzes
-
 test('renders default appearance with mocked data', () => {
-  render(<Quiz data={quizzesData} />)
+  render(<Quiz data={_mockQuizzes} />)
 
   expect(
     screen.getByRole('heading', {

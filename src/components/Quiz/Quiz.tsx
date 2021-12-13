@@ -10,6 +10,7 @@ type QuizProps = {
 
 const Quiz = ({ data }: QuizProps) => {
   const [quizzes, setQuizzes] = useState<IQuiz[] | null>(null)
+  const [quizCount, setQuizCount] = useState(0)
 
   useEffect(() => {
     setQuizzes(data)
@@ -18,20 +19,21 @@ const Quiz = ({ data }: QuizProps) => {
   const handleChangeAnswer = (id: number): void => {
     // TODO: replace later
     console.log(id)
+    setQuizCount(quizCount + 1)
   }
 
   if (!quizzes) {
     return <p>Loading...</p>
   }
 
-  const { id, question, answers } = quizzes[0]
+  const { id, question, answers } = quizzes[quizCount]
 
   return (
     <div className={cls.wrapper}>
       <h2 className={cls.heading}>Can you try the Quiz?</h2>
 
       <article className={cls.content}>
-        <Question id={id} question={question} />
+        <Question id={id} question={question} quizzesLength={quizzes.length} />
         <AnswersList answers={answers} onChangeAnswer={handleChangeAnswer} />
       </article>
     </div>
