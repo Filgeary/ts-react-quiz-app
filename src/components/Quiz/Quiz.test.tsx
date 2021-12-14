@@ -38,6 +38,7 @@ describe('Events', () => {
     await screen.findByRole('heading', { name: /question 3/i })
 
     userEvent.click(screen.getByText(/answer 3.3/i))
-    await screen.findByText(/finished/i)
+    await screen.findByRole('heading', { name: /see your answers!/i })
+    await screen.findByRole('heading', { name: /total results/i })
   })
 })

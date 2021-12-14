@@ -3,6 +3,7 @@ import cls from './Quiz.module.css'
 import Question from '../Question/Question'
 import AnswersList from '../AnswersList/AnswersList'
 import { IQuiz } from '../../models'
+import Results from '../Results/Results'
 
 type QuizProps = {
   data: IQuiz[]
@@ -13,6 +14,7 @@ const Quiz = ({ data }: QuizProps) => {
   const [quizzes, setQuizzes] = useState<IQuiz[] | null>(null)
   const [quizCount, setQuizCount] = useState(0)
   const [answerValue, setAnswerValue] = useState<AnswerValue>(null)
+  const [isFinished, setIsFinished] = useState(false)
 
   useEffect(() => {
     setQuizzes(data)
@@ -21,14 +23,19 @@ const Quiz = ({ data }: QuizProps) => {
   const isCorrectAnswer = (answerId: number) => {
     return quizzes?.[quizCount].correctAnswerID === answerId
   }
+  const isQuizFinished = () => quizCount + 1 === quizzes?.length
 
   const handleChangeAnswer = (answerId: number): void => {
     if (isCorrectAnswer(answerId)) {
       setAnswerValue({ [answerId]: 'right' })
 
       const timerId = setTimeout(() => {
-        setQuizCount(quizCount + 1)
-        setAnswerValue(null)
+        if (isQuizFinished()) {
+          setIsFinished(true)
+        } else {
+          setQuizCount(quizCount + 1)
+          setAnswerValue(null)
+        }
         clearTimeout(timerId)
       }, 1000)
     } else {
@@ -36,23 +43,31 @@ const Quiz = ({ data }: QuizProps) => {
     }
   }
 
-  if (!quizzes) return <p>Oops...</p>
-  if (quizCount === quizzes.length) return <p>Finished!</p>
+  if (!quizzes) return <p>No Data...</p>
 
   const { id, question, answers } = quizzes[quizCount]
+  const heading = !isFinished ? 'Can you try the Quiz?' : 'See your Answers!'
 
   return (
     <div className={cls.wrapper}>
-      <h2 className={cls.heading}>Can you try the Quiz?</h2>
+      <h2 className={cls.heading}>{heading}</h2>
 
-      <article className={cls.content}>
-        <Question id={id} question={question} quizzesLength={quizzes.length} />
-        <AnswersList
-          answers={answers}
-          answerValue={answerValue}
-          onChangeAnswer={handleChangeAnswer}
-        />
-      </article>
+      {isFinished ? (
+        <Results />
+      ) : (
+        <div className={cls.content}>
+          <Question
+            id={id}
+            question={question}
+            quizzesLength={quizzes.length}
+          />
+          <AnswersList
+            answers={answers}
+            answerValue={answerValue}
+            onChangeAnswer={handleChangeAnswer}
+          />
+        </div>
+      )}
     </div>
   )
 }
