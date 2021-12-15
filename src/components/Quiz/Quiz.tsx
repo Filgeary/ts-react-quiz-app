@@ -52,6 +52,14 @@ const Quiz = ({ data }: QuizProps) => {
     }
   }
 
+  // clear Full State
+  const handleClickRetryAgain = () => {
+    setQuizCount(0)
+    setAnswerRecord(null)
+    setDerivedAnswersMap(new Map())
+    setIsFinished(false)
+  }
+
   if (!quizzes) return <p>No Data...</p>
 
   const { id, question, answers } = quizzes[quizCount]
@@ -62,7 +70,11 @@ const Quiz = ({ data }: QuizProps) => {
       <h2 className={cls.heading}>{heading}</h2>
 
       {isFinished ? (
-        <Results quizzes={quizzes} derivedAnswersMap={derivedAnswersMap} />
+        <Results
+          quizzes={quizzes}
+          derivedAnswersMap={derivedAnswersMap}
+          onClickRetryAgain={handleClickRetryAgain}
+        />
       ) : (
         <div className={cls.content}>
           <Question
