@@ -2,15 +2,16 @@ import React from 'react'
 import cls from './AnswersList.module.css'
 import AnswerItem from './AnswerItem/AnswerItem'
 import { IQuizAnswer } from '../../models'
+import { AnswerRecord } from '../Quiz/Quiz'
 
 type AnswersListProps = {
   answers: IQuizAnswer[]
-  answerValue: Record<string, 'right' | 'wrong'> | null
+  answerRecord: AnswerRecord | null
   onChangeAnswer: (id: number) => void
 }
 
 const AnswersList = (props: AnswersListProps) => {
-  const { answers, answerValue, onChangeAnswer } = props
+  const { answers, answerRecord, onChangeAnswer } = props
 
   return (
     <section className={cls.content}>
@@ -24,7 +25,7 @@ const AnswersList = (props: AnswersListProps) => {
             <AnswerItem
               key={id}
               answer={answer}
-              answerValue={answerValue ? answerValue[id] : ''}
+              answerValue={answerRecord ? answerRecord[id] : ''}
               onChangeAnswer={onChangeAnswer}
             />
           )

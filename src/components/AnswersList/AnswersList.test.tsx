@@ -10,7 +10,7 @@ test('renders default appearance with mocked data', () => {
   render(
     <AnswersList
       answers={answers}
-      answerValue={null}
+      answerRecord={null}
       onChangeAnswer={() => {}}
     />,
   )
@@ -30,7 +30,7 @@ describe('Events', () => {
     render(
       <AnswersList
         answers={answers}
-        answerValue={null}
+        answerRecord={null}
         onChangeAnswer={mockChangeAnswer}
       />,
     )
