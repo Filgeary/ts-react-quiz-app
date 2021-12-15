@@ -28,7 +28,7 @@ describe('Events', () => {
     await screen.findByRole('heading', { name: /question 1/i })
   })
 
-  test('switch on question 2 by click on right answer', async () => {
+  test('right answers on All questions & gets correct results', async () => {
     render(<Quiz data={_mockQuizzes} />)
 
     userEvent.click(screen.getByText(/answer 1.1/i))
@@ -40,5 +40,42 @@ describe('Events', () => {
     userEvent.click(screen.getByText(/answer 3.3/i))
     await screen.findByRole('heading', { name: /see your answers!/i })
     await screen.findByRole('heading', { name: /total results/i })
+
+    // gets 3 right check-icons
+    await screen.findByText(/✅ Mock Question 1/i)
+    await screen.findByText(/✅ Mock Question 2/i)
+    await screen.findByText(/✅ Mock Question 3/i)
+    await screen.findByText(/right: 3 from 3/i)
+
+    expect(screen.queryByText(/👎 Mock Question 1/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/👎 Mock Question 2/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/👎 Mock Question 3/i)).not.toBeInTheDocument()
+  })
+
+  test('wrong answers on All questions & gets correct results', async () => {
+    render(<Quiz data={_mockQuizzes} />)
+
+    userEvent.click(screen.getByText(/answer 1.2/i)) // wrong answer
+    userEvent.click(screen.getByText(/answer 1.1/i))
+    await screen.findByRole('heading', { name: /question 2/i })
+
+    userEvent.click(screen.getByText(/answer 2.1/i)) // wrong answer
+    userEvent.click(screen.getByText(/answer 2.2/i))
+    await screen.findByRole('heading', { name: /question 3/i })
+
+    userEvent.click(screen.getByText(/answer 3.2/i)) // wrong answer
+    userEvent.click(screen.getByText(/answer 3.3/i))
+    await screen.findByRole('heading', { name: /see your answers!/i })
+    await screen.findByRole('heading', { name: /total results/i })
+
+    // get 3 wrong check-icons
+    await screen.findByText(/👎 Mock Question 1/i)
+    await screen.findByText(/👎 Mock Question 2/i)
+    await screen.findByText(/👎 Mock Question 3/i)
+    await screen.findByText(/right: 0 from 3/i)
+
+    expect(screen.queryByText(/✅ Mock Question 1/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/✅ Mock Question 2/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/✅ Mock Question 3/i)).not.toBeInTheDocument()
   })
 })

@@ -8,12 +8,16 @@ import Results from '../Results/Results'
 type QuizProps = {
   data: IQuiz[]
 }
-type AnswerValue = Record<string, 'right' | 'wrong'> | null
+export type AnswerValue = 'right' | 'wrong'
+export type AnswerRecord = Record<string, AnswerValue>
 
 const Quiz = ({ data }: QuizProps) => {
   const [quizzes, setQuizzes] = useState<IQuiz[] | null>(null)
   const [quizCount, setQuizCount] = useState(0)
-  const [answerValue, setAnswerValue] = useState<AnswerValue>(null)
+  const [answerRecord, setAnswerRecord] = useState<AnswerRecord | null>(null)
+  const [derivedAnswersMap, setDerivedAnswersMap] = useState(
+    new Map<number, AnswerValue>(),
+  )
   const [isFinished, setIsFinished] = useState(false)
 
   useEffect(() => {
@@ -27,19 +31,24 @@ const Quiz = ({ data }: QuizProps) => {
 
   const handleChangeAnswer = (answerId: number): void => {
     if (isCorrectAnswer(answerId)) {
-      setAnswerValue({ [answerId]: 'right' })
+      setAnswerRecord({ [answerId]: 'right' })
+
+      if (!derivedAnswersMap.has(quizCount)) {
+        setDerivedAnswersMap(derivedAnswersMap.set(quizCount, 'right'))
+      }
 
       const timerId = setTimeout(() => {
         if (isQuizFinished()) {
           setIsFinished(true)
         } else {
           setQuizCount(quizCount + 1)
-          setAnswerValue(null)
+          setAnswerRecord(null)
         }
         clearTimeout(timerId)
       }, 1000)
     } else {
-      setAnswerValue({ [answerId]: 'wrong' })
+      setAnswerRecord({ [answerId]: 'wrong' })
+      setDerivedAnswersMap(derivedAnswersMap.set(quizCount, 'wrong'))
     }
   }
 
@@ -53,7 +62,7 @@ const Quiz = ({ data }: QuizProps) => {
       <h2 className={cls.heading}>{heading}</h2>
 
       {isFinished ? (
-        <Results />
+        <Results quizzes={quizzes} derivedAnswersMap={derivedAnswersMap} />
       ) : (
         <div className={cls.content}>
           <Question
@@ -63,7 +72,7 @@ const Quiz = ({ data }: QuizProps) => {
           />
           <AnswersList
             answers={answers}
-            answerValue={answerValue}
+            answerRecord={answerRecord}
             onChangeAnswer={handleChangeAnswer}
           />
         </div>
