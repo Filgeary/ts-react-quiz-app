@@ -7,11 +7,17 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const handleToggleMenu = (): void => setIsMenuOpen(!isMenuOpen)
+  const handleClickBackdrop = (): void => setIsMenuOpen(false)
+  const handleKeyEscape = (evt: React.KeyboardEvent<HTMLDivElement>): void => {
+    if (isMenuOpen && evt?.key === 'Escape') {
+      setIsMenuOpen(false)
+    }
+  }
 
   return (
-    <div className={cls.wrapper}>
+    <div className={cls.wrapper} onKeyDown={handleKeyEscape}>
       <MenuToggle isMenuOpen={isMenuOpen} onToggleMenu={handleToggleMenu} />
-      <Drawer isMenuOpen={isMenuOpen} />
+      <Drawer isMenuOpen={isMenuOpen} onClickBackdrop={handleClickBackdrop} />
     </div>
   )
 }
