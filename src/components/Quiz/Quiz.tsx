@@ -53,7 +53,7 @@ const Quiz = ({ data }: QuizProps) => {
   }
 
   // clear Full State
-  const handleClickRetryAgain = () => {
+  const handleClickRetryAgain = (): void => {
     setQuizCount(0)
     setAnswerRecord(null)
     setDerivedAnswersMap(new Map())

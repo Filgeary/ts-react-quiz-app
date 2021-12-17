@@ -3,7 +3,7 @@ import cls from './Button.module.css'
 
 type ButtonProps = {
   children: React.ReactNode
-  onClickButton: React.MouseEventHandler<HTMLButtonElement>
+  onClickButton: () => void
   type: 'primary' | 'success' | 'error'
   isDisabled?: boolean
 }

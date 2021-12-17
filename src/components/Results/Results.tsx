@@ -7,7 +7,7 @@ import Button from '../../ui/Button/Button'
 type ResultsProps = {
   quizzes: IQuiz[]
   derivedAnswersMap: Map<number, AnswerValue>
-  onClickRetryAgain: React.MouseEventHandler<HTMLButtonElement>
+  onClickRetryAgain: () => void
 }
 
 const Results = (props: ResultsProps) => {
