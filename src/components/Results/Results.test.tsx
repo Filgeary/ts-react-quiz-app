@@ -10,7 +10,11 @@ const derivedAnswersMap = new Map()
 
 test('renders default appearance with mocked data', () => {
   render(
-    <Results quizzes={_mockQuizzes} derivedAnswersMap={derivedAnswersMap} />,
+    <Results
+      quizzes={_mockQuizzes}
+      derivedAnswersMap={derivedAnswersMap}
+      onClickRetryAgain={() => {}}
+    />,
   )
 
   expect(
@@ -20,4 +24,11 @@ test('renders default appearance with mocked data', () => {
   expect(screen.getByText(/👎 Mock Question 2/i)).toBeInTheDocument()
   expect(screen.getByText(/✅ Mock Question 3/i)).toBeInTheDocument()
   expect(screen.getByText(/right: 2 from 3/i)).toBeInTheDocument()
+
+  expect(
+    screen.getByRole('button', { name: /retry again/i }),
+  ).toBeInTheDocument()
+  expect(
+    screen.getByRole('button', { name: /tests page/i }),
+  ).toBeInTheDocument()
 })

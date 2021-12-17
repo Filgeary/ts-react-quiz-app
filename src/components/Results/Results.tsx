@@ -2,16 +2,24 @@ import React from 'react'
 import cls from './Results.module.css'
 import { IQuiz } from '../../models'
 import { AnswerValue } from '../Quiz/Quiz'
+import Button from '../../ui/Button/Button'
 
 type ResultsProps = {
   quizzes: IQuiz[]
   derivedAnswersMap: Map<number, AnswerValue>
+  onClickRetryAgain: () => void
 }
 
-const Results = ({ quizzes, derivedAnswersMap }: ResultsProps) => {
+const Results = (props: ResultsProps) => {
+  const { quizzes, derivedAnswersMap, onClickRetryAgain } = props
   const rightAnswersCount = [...derivedAnswersMap.values()].filter(
     value => value === 'right',
   ).length
+
+  // TODO: update
+  const handleClickTestsPage = () => {
+    console.log('test page')
+  }
 
   return (
     <div className={cls.wrapper}>
@@ -32,6 +40,15 @@ const Results = ({ quizzes, derivedAnswersMap }: ResultsProps) => {
           )
         })}
       </ul>
+
+      <div>
+        <Button onClickButton={onClickRetryAgain} variant={'primary'}>
+          Retry Again
+        </Button>
+        <Button onClickButton={handleClickTestsPage} variant={'success'}>
+          Tests Page
+        </Button>
+      </div>
     </div>
   )
 }

@@ -78,4 +78,20 @@ describe('Events', () => {
     expect(screen.queryByText(/✅ Mock Question 2/i)).not.toBeInTheDocument()
     expect(screen.queryByText(/✅ Mock Question 3/i)).not.toBeInTheDocument()
   })
+
+  test('reset full state by click after answering all questions', async () => {
+    render(<Quiz data={_mockQuizzes} />)
+
+    userEvent.click(screen.getByText(/answer 1.1/i))
+    userEvent.click(await screen.findByText(/answer 2.2/i))
+    userEvent.click(await screen.findByText(/answer 3.3/i))
+
+    const btn = await screen.findByRole('button', { name: /retry again/i })
+    userEvent.click(btn)
+
+    await screen.findByRole('heading', {
+      name: /can you try the quiz\?/i,
+    })
+    await screen.findByRole('heading', { name: /question 1/i })
+  })
 })
