@@ -3,7 +3,7 @@ import cls from './Layout.module.css'
 
 const Layout: React.FC = ({ children }) => (
   <div className={cls.wrapper}>
-    <main className={cls.main}>{children}</main>
+    <div className={cls.content}>{children}</div>
   </div>
 )
 

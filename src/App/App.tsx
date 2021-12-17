@@ -10,7 +10,9 @@ const App = () => (
   <Layout>
     <h1>TS React Quiz app</h1>
 
-    <Quiz data={quizzesData} />
+    <main>
+      <Quiz data={quizzesData} />
+    </main>
   </Layout>
 )
 
