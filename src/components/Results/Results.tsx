@@ -42,10 +42,10 @@ const Results = (props: ResultsProps) => {
       </ul>
 
       <div>
-        <Button onClickButton={onClickRetryAgain} type={'primary'}>
+        <Button onClickButton={onClickRetryAgain} variant={'primary'}>
           Retry Again
         </Button>
-        <Button onClickButton={handleClickTestsPage} type={'success'}>
+        <Button onClickButton={handleClickTestsPage} variant={'success'}>
           Tests Page
         </Button>
       </div>

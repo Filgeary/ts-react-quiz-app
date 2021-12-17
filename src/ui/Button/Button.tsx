@@ -4,13 +4,14 @@ import cls from './Button.module.css'
 type ButtonProps = {
   children: React.ReactNode
   onClickButton: () => void
-  type: 'primary' | 'success' | 'error'
+  variant: 'primary' | 'success' | 'error'
   isDisabled?: boolean
+  cssStyles?: React.CSSProperties
 }
 
 const Button = (props: ButtonProps) => {
-  const { children, onClickButton, type, isDisabled } = props
-  const classes = [cls.btn, cls[type]]
+  const { children, onClickButton, variant, isDisabled, cssStyles } = props
+  const classes = [cls.btn, cls[variant], cssStyles]
 
   return (
     <button
