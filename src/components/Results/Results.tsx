@@ -3,6 +3,7 @@ import cls from './Results.module.css'
 import { IQuiz } from '../../models'
 import { AnswerValue } from '../Quiz/Quiz'
 import Button from '../../ui/Button/Button'
+import { useNavigate } from 'react-router-dom'
 
 type ResultsProps = {
   quizzes: IQuiz[]
@@ -16,10 +17,8 @@ const Results = (props: ResultsProps) => {
     value => value === 'right',
   ).length
 
-  // TODO: update
-  const handleClickTestsPage = () => {
-    console.log('test page')
-  }
+  const navigate = useNavigate()
+  const handleClickGoToHome = (): void => navigate('/')
 
   return (
     <div className={cls.wrapper}>
@@ -45,8 +44,8 @@ const Results = (props: ResultsProps) => {
         <Button onClickButton={onClickRetryAgain} variant={'primary'}>
           Retry Again
         </Button>
-        <Button onClickButton={handleClickTestsPage} variant={'success'}>
-          Tests Page
+        <Button onClickButton={handleClickGoToHome} variant={'success'}>
+          Home
         </Button>
       </div>
     </div>
