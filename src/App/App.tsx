@@ -8,13 +8,14 @@ import { Route, Routes } from 'react-router-dom'
 import QuizList from '../components/QuizList/QuizList'
 import Auth from '../components/Auth/Auth'
 import QuizCreator from '../components/QuizCreator/QuizCreator'
+import { LogoLink } from '../ui/LogoLink/LogoLink'
 
 const quizzesData: IQuiz[] = _mockQuizzes
 
 const App = () => (
   <Layout>
     <header>
-      <h1>TS React Quiz app</h1>
+      <LogoLink title={'TS React Quiz app'} />
       <NavBar />
     </header>
 
