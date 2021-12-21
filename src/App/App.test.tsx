@@ -46,4 +46,24 @@ describe('Events', () => {
       screen.queryByRole('button', { name: /close ❎/i }),
     ).not.toBeInTheDocument()
   })
+
+  test('menu navigation', async () => {
+    render(<App />, { wrapper: MemoryRouter })
+
+    // click on Auth link & render new screen
+    userEvent.click(screen.getByRole('button', { name: /menu ⬇/i }))
+    const link1 = await screen.findByRole('link', { name: /auth/i })
+    userEvent.click(link1)
+    const heading1 = await screen.findByRole('heading', { name: /auth/i })
+    expect(heading1).toBeInTheDocument()
+
+    // click on Quiz Creator link & render new screen
+    userEvent.click(screen.getByRole('button', { name: /menu ⬇/i }))
+    const link2 = await screen.findByRole('link', { name: /quiz creator/i })
+    userEvent.click(link2)
+    const heading2 = await screen.findByRole('heading', {
+      name: /quiz creator/i,
+    })
+    expect(heading2).toBeInTheDocument()
+  })
 })
