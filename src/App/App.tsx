@@ -4,18 +4,28 @@ import Quiz from '../components/Quiz/Quiz'
 import { IQuiz } from '../models'
 import { _mockQuizzes } from '../_mocks/_mockQuizzes'
 import NavBar from '../ui/NavBar/NavBar'
+import { Route, Routes } from 'react-router-dom'
+import WelcomeScreen from '../components/WelcomeScreen/WelcomeScreen'
+import Auth from '../components/Auth/Auth'
+import QuizCreator from '../components/QuizCreator/QuizCreator'
+import { LogoLink } from '../ui/LogoLink/LogoLink'
 
 const quizzesData: IQuiz[] = _mockQuizzes
 
 const App = () => (
   <Layout>
     <header>
-      <h1>TS React Quiz app</h1>
+      <LogoLink title={'TS React Quiz app'} />
       <NavBar />
     </header>
 
     <main>
-      <Quiz data={quizzesData} />
+      <Routes>
+        <Route path='/' element={<WelcomeScreen />} />
+        <Route path='/auth' element={<Auth />} />
+        <Route path='/quiz/:id' element={<Quiz data={quizzesData} />} />
+        <Route path='/quiz-creator' element={<QuizCreator />} />
+      </Routes>
     </main>
   </Layout>
 )

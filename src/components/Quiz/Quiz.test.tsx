@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react'
 import Quiz from './Quiz'
 import { _mockQuizzes } from '../../_mocks/_mockQuizzes'
 import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
 
 test('renders default appearance with mocked data', () => {
   render(<Quiz data={_mockQuizzes} />)
@@ -29,7 +30,7 @@ describe('Events', () => {
   })
 
   test('right answers on All questions & gets correct results', async () => {
-    render(<Quiz data={_mockQuizzes} />)
+    render(<Quiz data={_mockQuizzes} />, { wrapper: MemoryRouter })
 
     userEvent.click(screen.getByText(/answer 1.1/i))
     await screen.findByRole('heading', { name: /question 2/i })
@@ -53,7 +54,7 @@ describe('Events', () => {
   })
 
   test('wrong answers on All questions & gets correct results', async () => {
-    render(<Quiz data={_mockQuizzes} />)
+    render(<Quiz data={_mockQuizzes} />, { wrapper: MemoryRouter })
 
     userEvent.click(screen.getByText(/answer 1.2/i)) // wrong answer
     userEvent.click(screen.getByText(/answer 1.1/i))
@@ -80,7 +81,7 @@ describe('Events', () => {
   })
 
   test('reset full state by click after answering all questions', async () => {
-    render(<Quiz data={_mockQuizzes} />)
+    render(<Quiz data={_mockQuizzes} />, { wrapper: MemoryRouter })
 
     userEvent.click(screen.getByText(/answer 1.1/i))
     userEvent.click(await screen.findByText(/answer 2.2/i))

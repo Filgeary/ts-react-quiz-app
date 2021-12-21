@@ -23,7 +23,7 @@
 }
 
 .listItem {
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px solid #7969e6;
 }
 
 .link {
@@ -34,13 +34,12 @@
   font-size: 1.4rem;
   text-decoration: none;
   background-color: #fff;
-  position: relative;
-  transition: opacity 0.3s;
+  transform: translateX(0px);
+  transition: transform 0.2s ease-in;
 }
 
 .link:hover,
 .link:focus,
-.link:active,
-.active {
-  background-color: #ccc;
+.link:active {
+  transform: translateX(10px);
 }

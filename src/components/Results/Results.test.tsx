@@ -2,6 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import Results from './Results'
 import { _mockQuizzes } from '../../_mocks/_mockQuizzes'
+import { MemoryRouter } from 'react-router-dom'
 
 const derivedAnswersMap = new Map()
   .set(0, 'right')
@@ -15,6 +16,7 @@ test('renders default appearance with mocked data', () => {
       derivedAnswersMap={derivedAnswersMap}
       onClickRetryAgain={() => {}}
     />,
+    { wrapper: MemoryRouter },
   )
 
   expect(
@@ -28,7 +30,5 @@ test('renders default appearance with mocked data', () => {
   expect(
     screen.getByRole('button', { name: /retry again/i }),
   ).toBeInTheDocument()
-  expect(
-    screen.getByRole('button', { name: /tests page/i }),
-  ).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: /home/i })).toBeInTheDocument()
 })
