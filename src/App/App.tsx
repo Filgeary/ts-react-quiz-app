@@ -4,6 +4,10 @@ import Quiz from '../components/Quiz/Quiz'
 import { IQuiz } from '../models'
 import { _mockQuizzes } from '../_mocks/_mockQuizzes'
 import NavBar from '../ui/NavBar/NavBar'
+import { Route, Routes } from 'react-router-dom'
+import QuizList from '../components/QuizList/QuizList'
+import Auth from '../components/Auth/Auth'
+import QuizCreator from '../components/QuizCreator/QuizCreator'
 
 const quizzesData: IQuiz[] = _mockQuizzes
 
@@ -15,7 +19,12 @@ const App = () => (
     </header>
 
     <main>
-      <Quiz data={quizzesData} />
+      <Routes>
+        <Route path='/' element={<QuizList />} />
+        <Route path='/auth' element={<Auth />} />
+        <Route path='/quiz/:id' element={<Quiz data={quizzesData} />} />
+        <Route path='/quiz-creator' element={<QuizCreator />} />
+      </Routes>
     </main>
   </Layout>
 )
