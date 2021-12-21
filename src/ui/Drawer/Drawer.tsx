@@ -1,9 +1,13 @@
 import React from 'react'
 import cls from './Drawer.module.css'
 import Backdrop from '../Backdrop/Backdrop'
+import { NavLink } from 'react-router-dom'
 
-// TODO: replace links
-const links = ['home', 'link-1', 'link-2']
+const links = [
+  { to: '/', label: 'Quiz List' },
+  { to: '/auth', label: 'Auth' },
+  { to: '/quiz-creator', label: 'Quiz Creator' },
+]
 
 type Props = {
   isMenuOpen: boolean
@@ -15,6 +19,11 @@ const Drawer = (props: Props) => {
   const classes = [cls.wrapper]
   if (!isMenuOpen) classes.push(cls.close)
 
+  const activeStyle = { color: '#7969e6' }
+  const notActiveStyle = { color: '#363d54' }
+
+  const handleClickCloseMenu = (): void => onClickBackdrop()
+
   return (
     <>
       <nav className={classes.join(' ')}>
@@ -22,9 +31,16 @@ const Drawer = (props: Props) => {
           {links.map((link, idx) => {
             return (
               <li key={idx} className={cls.listItem}>
-                <a href={`/${link}`} className={cls.link}>
-                  {link.toUpperCase()}
-                </a>
+                <NavLink
+                  to={link.to}
+                  className={cls.link}
+                  style={({ isActive }) =>
+                    isActive ? activeStyle : notActiveStyle
+                  }
+                  onClick={handleClickCloseMenu}
+                >
+                  {link.label}
+                </NavLink>
               </li>
             )
           })}
