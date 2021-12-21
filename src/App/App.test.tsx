@@ -26,7 +26,7 @@ test('full app rendering/navigating', () => {
   ).toBeInTheDocument()
   expect(
     screen.getByRole('heading', {
-      name: /quiz list/i,
+      name: /welcome to the curated picked master's quiz/i,
     }),
   ).toBeInTheDocument()
 })

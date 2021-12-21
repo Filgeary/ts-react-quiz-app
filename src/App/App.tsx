@@ -5,7 +5,7 @@ import { IQuiz } from '../models'
 import { _mockQuizzes } from '../_mocks/_mockQuizzes'
 import NavBar from '../ui/NavBar/NavBar'
 import { Route, Routes } from 'react-router-dom'
-import QuizList from '../components/QuizList/QuizList'
+import WelcomeScreen from '../components/WelcomeScreen/WelcomeScreen'
 import Auth from '../components/Auth/Auth'
 import QuizCreator from '../components/QuizCreator/QuizCreator'
 import { LogoLink } from '../ui/LogoLink/LogoLink'
@@ -21,7 +21,7 @@ const App = () => (
 
     <main>
       <Routes>
-        <Route path='/' element={<QuizList />} />
+        <Route path='/' element={<WelcomeScreen />} />
         <Route path='/auth' element={<Auth />} />
         <Route path='/quiz/:id' element={<Quiz data={quizzesData} />} />
         <Route path='/quiz-creator' element={<QuizCreator />} />
