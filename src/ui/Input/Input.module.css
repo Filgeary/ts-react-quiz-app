@@ -1,0 +1,32 @@
+.wrapper {
+  width: 100%;
+}
+
+.wrapper label {
+  margin-bottom: 4px;
+  padding: 0;
+  display: block;
+}
+
+.wrapper input {
+  display: block;
+  padding: 8px 16px;
+  width: 100%;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  outline: none;
+  transition: outline 200ms ease-in;
+}
+.wrapper input:focus,
+.wrapper input:active {
+  outline: 2px solid #2884f6;
+}
+
+.wrapper span {
+  color: #f01f30;
+  font-size: 0.9rem;
+}
+
+.wrapper.invalid input {
+  outline: 2px solid #f01f30;
+}
