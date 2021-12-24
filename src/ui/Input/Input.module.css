@@ -19,7 +19,7 @@
 }
 .wrapper input:focus,
 .wrapper input:active {
-  outline: 2px solid #2884f6;
+  outline: 3px solid #2884f6;
 }
 
 .wrapper span {

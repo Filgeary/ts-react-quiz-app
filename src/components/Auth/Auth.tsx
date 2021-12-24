@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import cls from './Auth.module.css'
 import Button from '../../ui/Button/Button'
 import Input from '../../ui/Input/Input'
@@ -39,6 +39,7 @@ const Auth = () => {
       },
     },
   })
+  const [isValidForm, setIsValidForm] = useState(false)
 
   const validateInput = ({ value, validation }: ValidateInput) => {
     if (!validation) return true
@@ -57,6 +58,16 @@ const Auth = () => {
 
     return isValid
   }
+
+  const validateForm = (...controls: IInputControl[]) => {
+    let isValidForm = true
+
+    controls.forEach(control => (isValidForm = control.isValid && isValidForm))
+    return isValidForm
+  }
+  useEffect(() => {
+    setIsValidForm(() => validateForm(emailInput, passwordInput))
+  }, [emailInput, passwordInput])
 
   const handleLogin = (): void => {}
 
@@ -95,8 +106,8 @@ const Auth = () => {
     }
   }
 
-  const renderControls = (...args: IInputControl[]) => {
-    return args.map((control, idx) => {
+  const renderControls = (...controls: IInputControl[]) => {
+    return controls.map((control, idx) => {
       return (
         <Input
           key={control.type + idx}
@@ -122,13 +133,18 @@ const Auth = () => {
         {inputControls}
 
         <div className={cls.controlsWrapper}>
-          <Button onClickButton={handleLogin} variant={'success'}>
+          <Button
+            onClickButton={handleLogin}
+            variant={'success'}
+            isDisabled={!isValidForm}
+          >
             Login
           </Button>
           <Button
             onClickButton={handleRegister}
             variant={'primary'}
             cssStyles={cls.controlRegister}
+            isDisabled={!isValidForm}
           >
             Register
           </Button>
