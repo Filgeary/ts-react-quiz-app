@@ -3,9 +3,11 @@ import cls from './Auth.module.css'
 import Button from '../../ui/Button/Button'
 import Input from '../../ui/Input/Input'
 import { IInputControl } from '../../typings'
+import { isValidEmail } from '../../utils'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>
 type FormEvent = React.FormEvent<HTMLFormElement>
+type ValidateInput = Pick<IInputControl, 'value' | 'validation'>
 
 const Auth = () => {
   const [emailInput, setEmailInput] = useState<IInputControl>({
@@ -22,6 +24,7 @@ const Auth = () => {
       },
     },
   })
+
   const [passwordInput, setPasswordInput] = useState<IInputControl>({
     type: 'password',
     label: 'Password',
@@ -37,6 +40,24 @@ const Auth = () => {
     },
   })
 
+  const validateInput = ({ value, validation }: ValidateInput) => {
+    if (!validation) return true
+
+    let isValid = true
+
+    if (validation.isRequired) {
+      isValid = value.trim() !== '' && isValid
+    }
+    if (validation.options?.isEmail) {
+      isValid = isValidEmail(value) && isValid
+    }
+    if (validation.options?.minLength) {
+      isValid = value.trim().length >= validation.options.minLength
+    }
+
+    return isValid
+  }
+
   const handleLogin = (): void => {}
 
   const handleRegister = (): void => {}
@@ -51,15 +72,27 @@ const Auth = () => {
         setEmailInput(prevState => ({
           ...prevState,
           value: evt.target.value,
+          isTouched: true,
+          isValid: validateInput({
+            value: evt.target.value,
+            validation: emailInput.validation,
+          }),
         }))
         break
       case 'password':
         setPasswordInput(prevState => ({
           ...prevState,
           value: evt.target.value,
+          isTouched: true,
+          isValid: validateInput({
+            value: evt.target.value,
+            validation: passwordInput.validation,
+          }),
         }))
+        break
+      default:
+        return
     }
-    console.log(controlName, evt.target.value)
   }
 
   const renderControls = (...args: IInputControl[]) => {
