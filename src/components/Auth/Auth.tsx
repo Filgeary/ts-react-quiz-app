@@ -4,13 +4,14 @@ import Button from '../../ui/Button/Button'
 import Input from '../../ui/Input/Input'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>
+type FormEvent = React.FormEvent<HTMLFormElement>
 
 const Auth = () => {
   const handleLogin = (): void => {}
 
   const handleRegister = (): void => {}
 
-  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = (evt: FormEvent): void => {
     evt.preventDefault()
   }
 
@@ -27,7 +28,7 @@ const Auth = () => {
 
       <form className={cls.form} onSubmit={handleSubmit}>
         <Input
-          inputType={'email'}
+          type={'email'}
           label={'Email'}
           value={''}
           onChange={handleChangeEmail}
@@ -36,7 +37,7 @@ const Auth = () => {
           shouldValidate={true}
         />
         <Input
-          inputType={'password'}
+          type={'password'}
           label={'Password'}
           value={''}
           onChange={handleChangePassword}
