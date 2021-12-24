@@ -1,12 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import cls from './Auth.module.css'
 import Button from '../../ui/Button/Button'
 import Input from '../../ui/Input/Input'
+import { IInputControl } from '../../typings'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>
 type FormEvent = React.FormEvent<HTMLFormElement>
 
 const Auth = () => {
+  const [emailInput, setEmailInput] = useState<IInputControl>({
+    type: 'email',
+    label: 'Email',
+    value: '',
+    errorMessage: 'Enter a correct Email',
+    isValid: false,
+    isTouched: false,
+    validation: {
+      isRequired: true,
+      options: {
+        isEmail: true,
+      },
+    },
+  })
+  const [passwordInput, setPasswordInput] = useState<IInputControl>({
+    type: 'password',
+    label: 'Password',
+    value: '',
+    errorMessage: 'Enter a correct Password',
+    isValid: false,
+    isTouched: false,
+    validation: {
+      isRequired: true,
+      options: {
+        minLength: 6,
+      },
+    },
+  })
+
   const handleLogin = (): void => {}
 
   const handleRegister = (): void => {}
@@ -15,36 +45,48 @@ const Auth = () => {
     evt.preventDefault()
   }
 
-  const handleChangeEmail = (evt: ChangeEvent): void => {
-    console.log(evt.target.value)
+  const handleChange = (evt: ChangeEvent, controlName: string): void => {
+    switch (controlName) {
+      case 'email':
+        setEmailInput(prevState => ({
+          ...prevState,
+          value: evt.target.value,
+        }))
+        break
+      case 'password':
+        setPasswordInput(prevState => ({
+          ...prevState,
+          value: evt.target.value,
+        }))
+    }
+    console.log(controlName, evt.target.value)
   }
-  const handleChangePassword = (evt: ChangeEvent): void => {
-    console.log(evt.target.value)
+
+  const renderControls = (...args: IInputControl[]) => {
+    return args.map((control, idx) => {
+      return (
+        <Input
+          key={control.type + idx}
+          type={control.type}
+          label={control.label}
+          value={control.value}
+          onChange={evt => handleChange(evt, control.type)}
+          isValid={control.isValid}
+          isTouched={control.isTouched}
+          shouldValidate={control.validation.isRequired}
+          errorMessage={control.errorMessage}
+        />
+      )
+    })
   }
+  const inputControls = renderControls(emailInput, passwordInput)
 
   return (
     <div className={cls.wrapper}>
       <h2 className={cls.heading}>Login Form</h2>
 
       <form className={cls.form} onSubmit={handleSubmit}>
-        <Input
-          type={'email'}
-          label={'Email'}
-          value={''}
-          onChange={handleChangeEmail}
-          isValid={true}
-          isTouched={false}
-          shouldValidate={true}
-        />
-        <Input
-          type={'password'}
-          label={'Password'}
-          value={''}
-          onChange={handleChangePassword}
-          isValid={true}
-          isTouched={false}
-          shouldValidate={true}
-        />
+        {inputControls}
 
         <div className={cls.controlsWrapper}>
           <Button onClickButton={handleLogin} variant={'success'}>
