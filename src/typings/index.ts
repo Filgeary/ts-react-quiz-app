@@ -1,15 +1,20 @@
-export interface IInputControl {
-  type: 'text' | 'email' | 'password' | string
-  label: string
+export interface IInputControl extends IInputControlConfig {
   value: string
-  errorMessage: string
   isValid: boolean
   isTouched: boolean
-  validation: {
-    isRequired: boolean
-    options?: {
-      isEmail?: boolean
-      minLength?: number
-    }
+  validation: IInputControlValidation
+}
+
+export interface IInputControlConfig {
+  type: 'text' | 'email' | 'password' | string
+  label: string
+  errorMessage: string
+}
+
+export interface IInputControlValidation {
+  isRequired: boolean
+  options?: {
+    isEmail?: boolean
+    minLength?: number
   }
 }

@@ -1,8 +1,56 @@
-import React from 'react'
+import React, { useState } from 'react'
 import cls from './QuizCreator.module.css'
 import Button from '../../ui/Button/Button'
+import { createControl } from '../../utils'
+import { IInputControl } from '../../typings'
+import Input from '../../ui/Input/Input'
+
+type FormControls = Record<string, IInputControl>
+type ChangeEvent = React.ChangeEvent<HTMLInputElement>
+
+const createInputControl = (id: number): IInputControl => {
+  return createControl(
+    {
+      type: 'text',
+      label: `Option ${id}`,
+      errorMessage: 'Field is empty',
+    },
+    { isRequired: true },
+  )
+}
+
+const createFormControls = (): FormControls => {
+  return {
+    question: createControl(
+      {
+        type: 'text',
+        label: 'Enter a Question',
+        errorMessage: 'Field is empty',
+      },
+      { isRequired: true },
+    ),
+    option1: createInputControl(1),
+    option2: createInputControl(2),
+    option3: createInputControl(3),
+    option4: createInputControl(4),
+  }
+}
 
 const QuizCreator = () => {
+  const [formControls, setFormControls] = useState<FormControls>(
+    createFormControls(),
+  )
+
+  const handleChangeInput = (evt: ChangeEvent, controlName: string): void => {
+    setFormControls(prevState => ({
+      ...prevState,
+      [controlName]: {
+        ...formControls[controlName],
+        value: evt.target.value,
+      },
+    }))
+  }
+
   const handleAddField = (): void => {}
   const handleCreateQuiz = (): void => {}
 
@@ -11,13 +59,22 @@ const QuizCreator = () => {
       <h2 className={cls.heading}>Quiz Creator</h2>
 
       <form className={cls.form}>
-        <input type='text' />
-        <br />
-
-        <input type='text' />
-        <input type='text' />
-        <input type='text' />
-        <input type='text' />
+        {Object.keys(formControls).map((controlName, idx) => {
+          const control = formControls[controlName]
+          return (
+            <Input
+              key={controlName + idx}
+              type={control.type}
+              label={control.label}
+              value={control.value}
+              onChange={evt => handleChangeInput(evt, controlName)}
+              isValid={control.isValid}
+              isTouched={control.isTouched}
+              shouldValidate={control.validation?.isRequired}
+              errorMessage={control.errorMessage}
+            />
+          )
+        })}
         <select>{/*  */}</select>
 
         <div className={cls.controlsWrapper}>
