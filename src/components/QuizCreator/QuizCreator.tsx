@@ -5,6 +5,7 @@ import { createControl } from '../../utils'
 import { IInputControl } from '../../typings'
 import Input from '../../ui/Input/Input'
 import Select from '../../ui/Select/Select'
+import HorizontalSeparator from '../../ui/HorizontalSeparator/HorizontalSeparator'
 
 type FormControls = Record<string, IInputControl>
 type ChangeEventInput = React.ChangeEvent<HTMLInputElement>
@@ -72,20 +73,23 @@ const QuizCreator = () => {
         {Object.keys(formControls).map((controlName, idx) => {
           const control = formControls[controlName]
           return (
-            <Input
-              key={controlName + idx}
-              type={control.type}
-              label={control.label}
-              value={control.value}
-              onChange={evt => handleChangeInput(evt, controlName)}
-              isValid={control.isValid}
-              isTouched={control.isTouched}
-              shouldValidate={control.validation?.isRequired}
-              errorMessage={control.errorMessage}
-            />
+            <React.Fragment key={controlName + idx}>
+              <Input
+                type={control.type}
+                label={control.label}
+                value={control.value}
+                onChange={evt => handleChangeInput(evt, controlName)}
+                isValid={control.isValid}
+                isTouched={control.isTouched}
+                shouldValidate={control.validation?.isRequired}
+                errorMessage={control.errorMessage}
+              />
+              {idx === 0 && <HorizontalSeparator />}
+            </React.Fragment>
           )
         })}
 
+        <HorizontalSeparator />
         <Select
           title={'Choose a Right Answer'}
           value={rightAnswerId}
