@@ -4,9 +4,11 @@ import Button from '../../ui/Button/Button'
 import { createControl } from '../../utils'
 import { IInputControl } from '../../typings'
 import Input from '../../ui/Input/Input'
+import Select from '../../ui/Select/Select'
 
 type FormControls = Record<string, IInputControl>
-type ChangeEvent = React.ChangeEvent<HTMLInputElement>
+type ChangeEventInput = React.ChangeEvent<HTMLInputElement>
+type ChangeEventSelect = React.ChangeEvent<HTMLSelectElement>
 
 const createInputControl = (id: number): IInputControl => {
   return createControl(
@@ -40,8 +42,12 @@ const QuizCreator = () => {
   const [formControls, setFormControls] = useState<FormControls>(
     createFormControls(),
   )
+  const [rightAnswerId, setRightAnswerId] = useState(0)
 
-  const handleChangeInput = (evt: ChangeEvent, controlName: string): void => {
+  const handleChangeInput = (
+    evt: ChangeEventInput,
+    controlName: string,
+  ): void => {
     setFormControls(prevState => ({
       ...prevState,
       [controlName]: {
@@ -49,6 +55,10 @@ const QuizCreator = () => {
         value: evt.target.value,
       },
     }))
+  }
+
+  const handleChangeSelect = (evt: ChangeEventSelect): void => {
+    setRightAnswerId(+evt.target.value)
   }
 
   const handleAddField = (): void => {}
@@ -75,7 +85,13 @@ const QuizCreator = () => {
             />
           )
         })}
-        <select>{/*  */}</select>
+
+        <Select
+          title={'Choose a Right Answer'}
+          value={rightAnswerId}
+          options={[1, 2, 3, 4]}
+          onChangeSelect={handleChangeSelect}
+        />
 
         <div className={cls.controlsWrapper}>
           <Button onClickButton={handleAddField} variant={'primary'}>
