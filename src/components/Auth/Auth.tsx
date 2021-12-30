@@ -3,11 +3,10 @@ import cls from './Auth.module.css'
 import Button from '../../ui/Button/Button'
 import Input from '../../ui/Input/Input'
 import { IInputControl } from '../../typings'
-import { isValidEmail } from '../../utils'
+import { validateForm, validateInput } from '../../utils'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>
 type FormEvent = React.FormEvent<HTMLFormElement>
-type ValidateInput = Pick<IInputControl, 'value' | 'validation'>
 
 const Auth = () => {
   const [emailInput, setEmailInput] = useState<IInputControl>({
@@ -24,7 +23,6 @@ const Auth = () => {
       },
     },
   })
-
   const [passwordInput, setPasswordInput] = useState<IInputControl>({
     type: 'password',
     label: 'Password',
@@ -41,30 +39,7 @@ const Auth = () => {
   })
   const [isValidForm, setIsValidForm] = useState(false)
 
-  const validateInput = ({ value, validation }: ValidateInput) => {
-    if (!validation) return true
-
-    let isValid = true
-
-    if (validation.isRequired) {
-      isValid = value.trim() !== '' && isValid
-    }
-    if (validation.options?.isEmail) {
-      isValid = isValidEmail(value) && isValid
-    }
-    if (validation.options?.minLength) {
-      isValid = value.trim().length >= validation.options.minLength
-    }
-
-    return isValid
-  }
-
-  const validateForm = (...controls: IInputControl[]) => {
-    let isValidForm = true
-
-    controls.forEach(control => (isValidForm = control.isValid && isValidForm))
-    return isValidForm
-  }
+  // check form validation
   useEffect(() => {
     setIsValidForm(() => validateForm(emailInput, passwordInput))
   }, [emailInput, passwordInput])
