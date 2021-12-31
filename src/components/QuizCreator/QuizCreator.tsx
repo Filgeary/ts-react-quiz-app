@@ -8,7 +8,14 @@ import Select from '../../ui/Select/Select'
 import HorizontalSeparator from '../../ui/HorizontalSeparator/HorizontalSeparator'
 import { IQuiz } from '../../models'
 
-type FormControls = Record<'question' | string, IInputControl>
+type FormControlsKeys =
+  | 'question'
+  | 'option1'
+  | 'option2'
+  | 'option3'
+  | 'option4'
+  | string
+type FormControls = Record<FormControlsKeys, IInputControl>
 type ChangeEventInput = React.ChangeEvent<HTMLInputElement>
 type ChangeEventSelect = React.ChangeEvent<HTMLSelectElement>
 
@@ -47,9 +54,11 @@ const QuizCreator = () => {
   const [formControls, setFormControls] = useState<FormControls>(
     createFormControls(),
   )
-  const [questionId, setQuestionId] = useState(1)
   const [rightAnswerId, setRightAnswerId] = useState(0)
   const [isValidForm, setIsValidForm] = useState(false)
+
+  // get id from server, if you want to make right sequence
+  const [questionId, setQuestionId] = useState(1)
 
   // check form validation
   const controls = transformControlsToArray(formControls)
@@ -82,26 +91,31 @@ const QuizCreator = () => {
     setRightAnswerId(+evt.target.value)
   }
 
-  // TODO
   const handleAddQuestion = (): void => {
+    const { question, option1, option2, option3, option4 } = formControls
+
     setQuizList(prevState => [
       ...prevState,
       {
-        question: formControls.question.value,
+        question: question.value,
         id: questionId,
         correctAnswerID: rightAnswerId,
         answers: [
-          { id: 1, title: 'answer 1' },
-          { id: 2, title: 'answer 2' },
-          { id: 3, title: 'answer 3' },
-          { id: 4, title: 'answer 4' },
+          { id: 1, title: option1.value },
+          { id: 2, title: option2.value },
+          { id: 3, title: option3.value },
+          { id: 4, title: option4.value },
         ],
       },
     ])
-    setQuestionId(prevState => prevState + 1)
+    setQuestionId(id => id + 1)
+
+    // clear form
+    setFormControls(createFormControls())
+    setRightAnswerId(0)
   }
 
-  // TODO
+  // TODO: send to server
   const handleCreateQuiz = (): void => {
     console.dir(quizList)
   }
