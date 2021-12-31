@@ -1,0 +1,24 @@
+.wrapper {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.wrapper label {
+  display: block;
+  margin-bottom: 4px;
+  padding: 0;
+}
+
+.wrapper select {
+  display: block;
+  padding: 8px 16px;
+  width: 100%;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  outline: none;
+  transition: outline 200ms ease-in;
+}
+.wrapper select:focus,
+.wrapper select:active {
+  outline: 3px solid #2884f6;
+}

@@ -1,9 +1,130 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import cls from './Auth.module.css'
+import Button from '../../ui/Button/Button'
+import Input from '../../ui/Input/Input'
+import { IInputControl } from '../../typings'
+import { validateForm, validateInput } from '../../utils'
+
+type ChangeEvent = React.ChangeEvent<HTMLInputElement>
+type FormEvent = React.FormEvent<HTMLFormElement>
 
 const Auth = () => {
+  const [emailInput, setEmailInput] = useState<IInputControl>({
+    type: 'email',
+    label: 'Email',
+    value: '',
+    errorMessage: 'Enter a correct Email',
+    isValid: false,
+    isTouched: false,
+    validation: {
+      isRequired: true,
+      options: {
+        isEmail: true,
+      },
+    },
+  })
+  const [passwordInput, setPasswordInput] = useState<IInputControl>({
+    type: 'password',
+    label: 'Password',
+    value: '',
+    errorMessage: 'Enter a correct Password',
+    isValid: false,
+    isTouched: false,
+    validation: {
+      isRequired: true,
+      options: {
+        minLength: 6,
+      },
+    },
+  })
+  const [isValidForm, setIsValidForm] = useState(false)
+
+  // check form validation
+  useEffect(() => {
+    setIsValidForm(() => validateForm(emailInput, passwordInput))
+  }, [emailInput, passwordInput])
+
+  const handleLogin = (): void => {}
+
+  const handleRegister = (): void => {}
+
+  const handleSubmit = (evt: FormEvent): void => {
+    evt.preventDefault()
+  }
+
+  const handleChange = (evt: ChangeEvent, controlName: string): void => {
+    switch (controlName) {
+      case 'email':
+        setEmailInput(prevState => ({
+          ...prevState,
+          value: evt.target.value,
+          isTouched: true,
+          isValid: validateInput({
+            value: evt.target.value,
+            validation: emailInput.validation,
+          }),
+        }))
+        break
+      case 'password':
+        setPasswordInput(prevState => ({
+          ...prevState,
+          value: evt.target.value,
+          isTouched: true,
+          isValid: validateInput({
+            value: evt.target.value,
+            validation: passwordInput.validation,
+          }),
+        }))
+        break
+      default:
+        return
+    }
+  }
+
+  const renderControls = (...controls: IInputControl[]) => {
+    return controls.map((control, idx) => {
+      return (
+        <Input
+          key={control.type + idx}
+          type={control.type}
+          label={control.label}
+          value={control.value}
+          onChange={evt => handleChange(evt, control.type)}
+          isValid={control.isValid}
+          isTouched={control.isTouched}
+          shouldValidate={control.validation.isRequired}
+          errorMessage={control.errorMessage}
+        />
+      )
+    })
+  }
+  const inputControls = renderControls(emailInput, passwordInput)
+
   return (
-    <div>
-      <h2>Auth</h2>
+    <div className={cls.wrapper}>
+      <h2 className={cls.heading}>Login Form</h2>
+
+      <form className={cls.form} onSubmit={handleSubmit}>
+        {inputControls}
+
+        <div className={cls.controlsWrapper}>
+          <Button
+            onClickButton={handleLogin}
+            variant={'success'}
+            isDisabled={!isValidForm}
+          >
+            Login
+          </Button>
+          <Button
+            onClickButton={handleRegister}
+            variant={'primary'}
+            cssStyles={cls.controlRegister}
+            isDisabled={!isValidForm}
+          >
+            Register
+          </Button>
+        </div>
+      </form>
     </div>
   )
 }

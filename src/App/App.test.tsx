@@ -54,7 +54,7 @@ describe('Events', () => {
     userEvent.click(screen.getByRole('button', { name: /menu ⬇/i }))
     const link1 = await screen.findByRole('link', { name: /auth/i })
     userEvent.click(link1)
-    const heading1 = await screen.findByRole('heading', { name: /auth/i })
+    const heading1 = await screen.findByRole('heading', { name: /login form/i })
     expect(heading1).toBeInTheDocument()
 
     // click on Quiz Creator link & render new screen

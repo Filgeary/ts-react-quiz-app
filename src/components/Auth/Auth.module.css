@@ -1,0 +1,33 @@
+.wrapper {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  padding: 40px 0 60px;
+}
+
+.heading {
+  color: #fff;
+  text-align: center;
+}
+
+.form {
+  display: grid;
+  gap: 28px;
+  width: 500px;
+  padding: 40px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  border: 2px solid #007bff;
+  border-radius: 8px;
+}
+
+.controlsWrapper {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+}
+
+.controlRegister {
+  margin-right: 0;
+}
