@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import Results from './Results'
-import { _mockQuizzes } from '../../_mocks/_mockQuizzes'
+import { _mockQuizzes } from '../../../_mocks/_mockQuizzes'
 import { MemoryRouter } from 'react-router-dom'
 
 const derivedAnswersMap = new Map()

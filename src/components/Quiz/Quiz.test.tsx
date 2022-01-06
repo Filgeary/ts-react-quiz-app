@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import Quiz from './Quiz'
-import { _mockQuizzes } from '../../_mocks/_mockQuizzes'
+import { _mockQuizzes } from '../../../_mocks/_mockQuizzes'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 

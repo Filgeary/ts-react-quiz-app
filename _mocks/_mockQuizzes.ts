@@ -1,4 +1,4 @@
-import { IQuiz } from '../models'
+import { IQuiz } from '../src/models'
 
 export const _mockQuizzes: IQuiz[] = [
   {

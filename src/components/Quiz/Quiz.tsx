@@ -6,7 +6,7 @@ import { IQuiz } from '../../models'
 import Results from '../Results/Results'
 
 type QuizProps = {
-  data: IQuiz[]
+  data?: IQuiz[] // TODO: fix types
 }
 export type AnswerValue = 'right' | 'wrong'
 export type AnswerRecord = Record<string, AnswerValue>
@@ -21,7 +21,7 @@ const Quiz = ({ data }: QuizProps) => {
   const [isFinished, setIsFinished] = useState(false)
 
   useEffect(() => {
-    setQuizzes(data)
+    if (data && data.length > 0) setQuizzes(data)
   }, [data])
 
   const isCorrectAnswer = (answerId: number) => {
