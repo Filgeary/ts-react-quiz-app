@@ -7,6 +7,7 @@ import WelcomeScreen from '../components/WelcomeScreen/WelcomeScreen'
 import Auth from '../components/Auth/Auth'
 import QuizCreator from '../components/QuizCreator/QuizCreator'
 import { LogoLink } from '../ui/LogoLink/LogoLink'
+import { AppRoute } from '../constants'
 
 const App = () => (
   <Layout>
@@ -17,10 +18,10 @@ const App = () => (
 
     <main>
       <Routes>
-        <Route path='/' element={<WelcomeScreen />} />
-        <Route path='/auth' element={<Auth />} />
-        <Route path='/quiz/:id' element={<Quiz />} />
-        <Route path='/quiz-creator' element={<QuizCreator />} />
+        <Route path={AppRoute.HOME} element={<WelcomeScreen />} />
+        <Route path={AppRoute.LOGIN} element={<Auth />} />
+        <Route path={AppRoute.QUIZZES} element={<Quiz />} />
+        <Route path={AppRoute.QUIZ_CREATOR} element={<QuizCreator />} />
       </Routes>
     </main>
   </Layout>

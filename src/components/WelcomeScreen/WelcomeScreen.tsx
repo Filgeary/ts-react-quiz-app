@@ -1,10 +1,11 @@
 import React from 'react'
 import cls from './WelcomeScreen.module.css'
 import { useNavigate } from 'react-router-dom'
+import { AppRoute } from '../../constants'
 
 const WelcomeScreen = () => {
   const navigate = useNavigate()
-  const handleClickGoToQuiz = (): void => navigate('/quiz/1')
+  const handleClickGoToQuiz = (): void => navigate(AppRoute.QUIZZES)
 
   return (
     <div className={cls.wrapper}>
