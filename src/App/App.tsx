@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from '../ui/Layout/Layout'
-import Quiz from '../components/Quiz/Quiz'
+import QuizCont from '../containers/QuizCont/QuizCont'
 import NavBar from '../ui/NavBar/NavBar'
 import { Route, Routes } from 'react-router-dom'
 import WelcomeScreen from '../components/WelcomeScreen/WelcomeScreen'
@@ -20,7 +20,7 @@ const App = () => (
       <Routes>
         <Route path={AppRoute.HOME} element={<WelcomeScreen />} />
         <Route path={AppRoute.LOGIN} element={<Auth />} />
-        <Route path={AppRoute.QUIZZES} element={<Quiz />} />
+        <Route path={AppRoute.QUIZZES} element={<QuizCont />} />
         <Route path={AppRoute.QUIZ_CREATOR} element={<QuizCreator />} />
       </Routes>
     </main>

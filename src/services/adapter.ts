@@ -1,8 +1,9 @@
-import { IQuiz, IQuizServer } from '../models'
+import { IQuiz, QuizRecordData } from '../models'
 
-type QuizData = Record<string, IQuizServer>
+// prettier-ignore
+export const adaptQuizToClient = (quiz: QuizRecordData): IQuiz[] | undefined => {
+  if (!quiz) return
 
-export const adaptQuizDataToClient = (quiz: QuizData): IQuiz[] => {
   return Object.keys(quiz).map(quizKey => {
     return {
       ...quiz[quizKey],

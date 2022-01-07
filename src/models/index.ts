@@ -13,3 +13,5 @@ export interface IQuizServer {
 export interface IQuiz extends IQuizServer {
   hashKey: string
 }
+
+export type QuizRecordData = Record<string, IQuizServer>
