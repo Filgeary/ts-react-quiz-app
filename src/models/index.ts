@@ -3,9 +3,13 @@ export interface IQuizAnswer {
   title: string
 }
 
-export interface IQuiz {
+export interface IQuizServer {
   id: number
   question: string
   correctAnswerID: number
   answers: IQuizAnswer[]
+}
+
+export interface IQuiz extends IQuizServer {
+  hashKey: string
 }

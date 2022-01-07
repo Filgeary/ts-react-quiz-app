@@ -6,7 +6,7 @@ import { IInputControl } from '../../typings'
 import Input from '../../ui/Input/Input'
 import Select from '../../ui/Select/Select'
 import HorizontalSeparator from '../../ui/HorizontalSeparator/HorizontalSeparator'
-import { IQuiz } from '../../models'
+import { IQuizServer } from '../../models'
 
 type FormControlsKeys =
   | 'question'
@@ -50,7 +50,7 @@ const transformControlsToArray = (controls: FormControls): IInputControl[] => {
 }
 
 const QuizCreator = () => {
-  const [quizList, setQuizList] = useState([] as IQuiz[])
+  const [quizList, setQuizList] = useState([] as IQuizServer[])
   const [formControls, setFormControls] = useState<FormControls>(
     createFormControls(),
   )
