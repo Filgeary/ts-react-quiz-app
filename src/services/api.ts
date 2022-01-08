@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { IQuizServer, QuizRecordData } from '../models'
+import { IQuizServer, PostResponse, QuizRecordData } from '../models'
 
 const BASE_URL =
   'https://ts-react-quiz-app-default-rtdb.europe-west1.firebasedatabase.app'
@@ -22,6 +22,11 @@ export const getQuizById = async (id: number) => {
     `/quizzes.json?orderBy="id"&equalTo=${id}`,
   )
 }
-export const postQuiz = async (quiz: IQuizServer[]) => {
-  return await api.post('/quizzes.json', quiz)
+export const postQuiz = async (quizList: IQuizServer[]) => {
+  const arr = []
+  for (const quiz of quizList) {
+    const res = await api.post('/quizzes.json', quiz)
+    arr.push(res.data as PostResponse)
+  }
+  return arr
 }

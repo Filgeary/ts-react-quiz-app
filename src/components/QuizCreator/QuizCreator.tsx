@@ -19,6 +19,11 @@ type FormControls = Record<FormControlsKeys, IInputControl>
 type ChangeEventInput = React.ChangeEvent<HTMLInputElement>
 type ChangeEventSelect = React.ChangeEvent<HTMLSelectElement>
 
+type Props = {
+  quizzesTotalCount: number
+  onPostQuizData: (data: IQuizServer[]) => void
+}
+
 const createInputControl = (id: number): IInputControl => {
   return createControl(
     {
@@ -49,7 +54,8 @@ const transformControlsToArray = (controls: FormControls): IInputControl[] => {
   return Object.keys(controls).map(controlName => controls[controlName])
 }
 
-const QuizCreator = () => {
+const QuizCreator = (props: Props) => {
+  const { quizzesTotalCount, onPostQuizData } = props
   const [quizList, setQuizList] = useState([] as IQuizServer[])
   const [formControls, setFormControls] = useState<FormControls>(
     createFormControls(),
@@ -57,8 +63,11 @@ const QuizCreator = () => {
   const [rightAnswerId, setRightAnswerId] = useState(1)
   const [isValidForm, setIsValidForm] = useState(false)
 
-  // get id from server, if you want to make right sequence
+  // sync QuizzesTotalCount to make right sequence by id
   const [questionId, setQuestionId] = useState(1)
+  useEffect(() => {
+    setQuestionId(quizzesTotalCount)
+  }, [quizzesTotalCount])
 
   // check form validation
   const controls = transformControlsToArray(formControls)
@@ -123,14 +132,13 @@ const QuizCreator = () => {
     clearInputs()
   }
 
-  // TODO: send to server
   const handleCreateQuiz = (): void => {
-    console.dir(quizList)
+    onPostQuizData(quizList)
     setTimeout(() => resetFullForm(), 0)
   }
 
   return (
-    <div className={cls.wrapper}>
+    <>
       <h2 className={cls.heading}>Quiz Creator</h2>
 
       <form className={cls.form}>
@@ -181,7 +189,7 @@ const QuizCreator = () => {
           </Button>
         </div>
       </form>
-    </div>
+    </>
   )
 }
 

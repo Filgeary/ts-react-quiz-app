@@ -15,3 +15,4 @@ export interface IQuiz extends IQuizServer {
 }
 
 export type QuizRecordData = Record<string, IQuizServer>
+export type PostResponse = Record<'name', string>

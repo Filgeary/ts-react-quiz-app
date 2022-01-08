@@ -5,7 +5,7 @@ import NavBar from '../ui/NavBar/NavBar'
 import { Route, Routes } from 'react-router-dom'
 import WelcomeScreen from '../components/WelcomeScreen/WelcomeScreen'
 import Auth from '../components/Auth/Auth'
-import QuizCreator from '../components/QuizCreator/QuizCreator'
+import QuizCreatorCont from '../containers/QuizCreatorCont/QuizCreatorCont'
 import { LogoLink } from '../ui/LogoLink/LogoLink'
 import { AppRoute } from '../constants'
 
@@ -21,7 +21,7 @@ const App = () => (
         <Route path={AppRoute.HOME} element={<WelcomeScreen />} />
         <Route path={AppRoute.LOGIN} element={<Auth />} />
         <Route path={AppRoute.QUIZZES} element={<QuizCont />} />
-        <Route path={AppRoute.QUIZ_CREATOR} element={<QuizCreator />} />
+        <Route path={AppRoute.QUIZ_CREATOR} element={<QuizCreatorCont />} />
       </Routes>
     </main>
   </Layout>
