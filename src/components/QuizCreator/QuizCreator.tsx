@@ -54,7 +54,7 @@ const QuizCreator = () => {
   const [formControls, setFormControls] = useState<FormControls>(
     createFormControls(),
   )
-  const [rightAnswerId, setRightAnswerId] = useState(0)
+  const [rightAnswerId, setRightAnswerId] = useState(1)
   const [isValidForm, setIsValidForm] = useState(false)
 
   // get id from server, if you want to make right sequence
@@ -65,6 +65,17 @@ const QuizCreator = () => {
   useEffect(() => {
     setIsValidForm(() => validateForm(...controls))
   }, [controls])
+
+  // clean up
+  const clearInputs = (): void => {
+    setFormControls(createFormControls())
+    setRightAnswerId(1)
+  }
+  const resetFullForm = (): void => {
+    clearInputs()
+    setQuizList([])
+    setIsValidForm(false)
+  }
 
   const handleChangeInput = (
     evt: ChangeEventInput,
@@ -109,15 +120,13 @@ const QuizCreator = () => {
       },
     ])
     setQuestionId(id => id + 1)
-
-    // clear form
-    setFormControls(createFormControls())
-    setRightAnswerId(0)
+    clearInputs()
   }
 
   // TODO: send to server
   const handleCreateQuiz = (): void => {
     console.dir(quizList)
+    setTimeout(() => resetFullForm(), 0)
   }
 
   return (
