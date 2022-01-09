@@ -1,4 +1,24 @@
-### POST quiz #5
+### POST signUp user
+POST {{authHost}}/accounts:signUp?key={{apiKey}}
+Content-Type: application/json
+
+{
+  "email": "abc@xyz.com",
+  "password": "123456",
+  "returnSecureToken": true
+}
+
+### POST logIn user
+POST {{authHost}}/accounts:signInWithPassword?key={{apiKey}}
+Content-Type: application/json
+
+{
+  "email": "abc@xyz.com",
+  "password": "123456",
+  "returnSecureToken": true
+}
+
+### POST quiz 5
 POST {{host}}/quizzes.json
 Content-Type: application/json
 
