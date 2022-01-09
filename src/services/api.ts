@@ -11,17 +11,18 @@ const createAPI = () => {
     timeout: REQUEST_TIMEOUT,
   })
 }
-
 const api = createAPI()
 
 export const getAllQuizzes = async () => {
   return await api.get<QuizRecordData>('/quizzes.json')
 }
+
 export const getQuizById = async (id: number) => {
   return await api.get<QuizRecordData>(
     `/quizzes.json?orderBy="id"&equalTo=${id}`,
   )
 }
+
 export const postQuiz = async (quizList: IQuizServer[]) => {
   const arr = []
   for (const quiz of quizList) {
