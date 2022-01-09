@@ -1,0 +1,10 @@
+.wrapper {
+  position: relative;
+  display: grid;
+  gap: 32px;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  margin: auto;
+  padding: 40px 0 60px;
+}

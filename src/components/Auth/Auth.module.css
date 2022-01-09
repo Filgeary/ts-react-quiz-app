@@ -1,12 +1,3 @@
-.wrapper {
-  display: grid;
-  gap: 32px;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-  padding: 40px 0 60px;
-}
-
 .heading {
   color: #fff;
   text-align: center;
