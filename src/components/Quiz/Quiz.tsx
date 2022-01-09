@@ -21,7 +21,7 @@ const Quiz = ({ data }: QuizProps) => {
   const [isFinished, setIsFinished] = useState(false)
 
   useEffect(() => {
-    setQuizzes(data)
+    if (data && data.length > 0) setQuizzes(data)
   }, [data])
 
   const isCorrectAnswer = (answerId: number) => {
@@ -60,13 +60,13 @@ const Quiz = ({ data }: QuizProps) => {
     setIsFinished(false)
   }
 
-  if (!quizzes) return <p>No Data...</p>
+  if (!quizzes) return <p style={{ textAlign: 'center' }}>No Data...</p>
 
   const { id, question, answers } = quizzes[quizCount]
   const heading = !isFinished ? 'Can you try the Quiz?' : 'See your Answers!'
 
   return (
-    <div className={cls.wrapper}>
+    <>
       <h2 className={cls.heading}>{heading}</h2>
 
       {isFinished ? (
@@ -89,7 +89,7 @@ const Quiz = ({ data }: QuizProps) => {
           />
         </div>
       )}
-    </div>
+    </>
   )
 }
 

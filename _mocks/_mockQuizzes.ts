@@ -1,7 +1,8 @@
-import { IQuiz } from '../models'
+import { IQuiz } from '../src/models'
 
 export const _mockQuizzes: IQuiz[] = [
   {
+    hashKey: 'hash-1',
     id: 1,
     question: 'Mock Question 1',
     correctAnswerID: 1.1,
@@ -13,6 +14,7 @@ export const _mockQuizzes: IQuiz[] = [
     ],
   },
   {
+    hashKey: 'hash-2',
     id: 2,
     question: 'Mock Question 2',
     correctAnswerID: 2.2,
@@ -24,6 +26,7 @@ export const _mockQuizzes: IQuiz[] = [
     ],
   },
   {
+    hashKey: 'hash-3',
     id: 3,
     question: 'Mock Question 3',
     correctAnswerID: 3.3,

@@ -1,11 +1,3 @@
-.wrapper {
-  display: grid;
-  align-items: center;
-  gap: 40px;
-  width: 100%;
-  color: #fff;
-}
-
 .heading {
   font-size: 1.8rem;
   text-align: center;

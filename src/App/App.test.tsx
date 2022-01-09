@@ -52,7 +52,7 @@ describe('Events', () => {
 
     // click on Auth link & render new screen
     userEvent.click(screen.getByRole('button', { name: /menu ⬇/i }))
-    const link1 = await screen.findByRole('link', { name: /auth/i })
+    const link1 = await screen.findByRole('link', { name: /login/i })
     userEvent.click(link1)
     const heading1 = await screen.findByRole('heading', { name: /login form/i })
     expect(heading1).toBeInTheDocument()

@@ -1,0 +1,9 @@
+.wrapper {
+  position: relative;
+  display: grid;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  min-height: 400px;
+  color: #fff;
+}

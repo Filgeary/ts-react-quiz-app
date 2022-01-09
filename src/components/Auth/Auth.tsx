@@ -4,11 +4,19 @@ import Button from '../../ui/Button/Button'
 import Input from '../../ui/Input/Input'
 import { IInputControl } from '../../typings'
 import { validateForm, validateInput } from '../../utils'
+import { FbLogInRequest, FbSignUpRequest } from '../../typings/firebaseAuth'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>
 type FormEvent = React.FormEvent<HTMLFormElement>
 
-const Auth = () => {
+type Props = {
+  onSignUp: (data: FbSignUpRequest) => void
+  onLogin: (data: FbLogInRequest) => void
+}
+
+const Auth = (props: Props) => {
+  const { onSignUp, onLogin } = props
+
   const [emailInput, setEmailInput] = useState<IInputControl>({
     type: 'email',
     label: 'Email',
@@ -44,9 +52,39 @@ const Auth = () => {
     setIsValidForm(() => validateForm(emailInput, passwordInput))
   }, [emailInput, passwordInput])
 
-  const handleLogin = (): void => {}
+  const setFormConfig = (): FbSignUpRequest | FbLogInRequest => ({
+    email: emailInput.value,
+    password: passwordInput.value,
+    returnSecureToken: true,
+  })
 
-  const handleRegister = (): void => {}
+  const clearForm = () => {
+    setEmailInput(prevState => ({
+      ...prevState,
+      value: '',
+      isValid: false,
+      isTouched: false,
+    }))
+
+    setPasswordInput(prevState => ({
+      ...prevState,
+      value: '',
+      isValid: false,
+      isTouched: false,
+    }))
+  }
+
+  const handleLogin = (): void => {
+    const config = setFormConfig()
+    onLogin(config)
+    clearForm()
+  }
+
+  const handleRegister = (): void => {
+    const config = setFormConfig()
+    onSignUp(config)
+    clearForm()
+  }
 
   const handleSubmit = (evt: FormEvent): void => {
     evt.preventDefault()
@@ -101,7 +139,7 @@ const Auth = () => {
   const inputControls = renderControls(emailInput, passwordInput)
 
   return (
-    <div className={cls.wrapper}>
+    <>
       <h2 className={cls.heading}>Login Form</h2>
 
       <form className={cls.form} onSubmit={handleSubmit}>
@@ -125,7 +163,7 @@ const Auth = () => {
           </Button>
         </div>
       </form>
-    </div>
+    </>
   )
 }
 

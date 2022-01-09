@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import Question from './Question'
-import { _mockQuizzes } from '../../_mocks/_mockQuizzes'
+import { _mockQuizzes } from '../../../_mocks/_mockQuizzes'
 
 const { id, question } = _mockQuizzes[0]
 

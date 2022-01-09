@@ -1,0 +1,45 @@
+### POST signUp user
+POST {{authHost}}/accounts:signUp?key={{apiKey}}
+Content-Type: application/json
+
+{
+  "email": "abc@xyz.com",
+  "password": "123456",
+  "returnSecureToken": true
+}
+
+### POST logIn user
+POST {{authHost}}/accounts:signInWithPassword?key={{apiKey}}
+Content-Type: application/json
+
+{
+  "email": "abc@xyz.com",
+  "password": "123456",
+  "returnSecureToken": true
+}
+
+### POST quiz 5
+POST {{host}}/quizzes.json
+Content-Type: application/json
+
+{
+  "id": 5,
+  "question": "Mock Question 5",
+  "correctAnswerID": 5.1,
+  "answers": [
+    { "id": 5.1, "title": "answer 5.1" },
+    { "id": 5.2, "title": "answer 5.2" },
+    { "id": 5.3, "title": "answer 5.3" },
+    { "id": 5.4, "title": "answer 5.4" }
+  ]
+}
+
+### GET quiz by id
+GET {{host}}/quizzes.json?orderBy="id"&equalTo=5
+Accept: application/json
+
+### GET all quizzes
+GET {{host}}/quizzes.json
+Accept: application/json
+
+###

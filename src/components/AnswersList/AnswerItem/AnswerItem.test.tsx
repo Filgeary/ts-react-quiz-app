@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import AnswerItem from './AnswerItem'
-import { _mockQuizzes } from '../../../_mocks/_mockQuizzes'
+import { _mockQuizzes } from '../../../../_mocks/_mockQuizzes'
 import userEvent from '@testing-library/user-event'
 
 const answer = _mockQuizzes[0].answers[0]

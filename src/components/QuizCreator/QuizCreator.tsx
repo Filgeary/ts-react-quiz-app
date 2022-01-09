@@ -6,7 +6,7 @@ import { IInputControl } from '../../typings'
 import Input from '../../ui/Input/Input'
 import Select from '../../ui/Select/Select'
 import HorizontalSeparator from '../../ui/HorizontalSeparator/HorizontalSeparator'
-import { IQuiz } from '../../models'
+import { IQuizServer } from '../../models'
 
 type FormControlsKeys =
   | 'question'
@@ -18,6 +18,11 @@ type FormControlsKeys =
 type FormControls = Record<FormControlsKeys, IInputControl>
 type ChangeEventInput = React.ChangeEvent<HTMLInputElement>
 type ChangeEventSelect = React.ChangeEvent<HTMLSelectElement>
+
+type Props = {
+  quizzesTotalCount: number
+  onPostQuizData: (data: IQuizServer[]) => void
+}
 
 const createInputControl = (id: number): IInputControl => {
   return createControl(
@@ -49,22 +54,37 @@ const transformControlsToArray = (controls: FormControls): IInputControl[] => {
   return Object.keys(controls).map(controlName => controls[controlName])
 }
 
-const QuizCreator = () => {
-  const [quizList, setQuizList] = useState([] as IQuiz[])
+const QuizCreator = (props: Props) => {
+  const { quizzesTotalCount, onPostQuizData } = props
+  const [quizList, setQuizList] = useState([] as IQuizServer[])
   const [formControls, setFormControls] = useState<FormControls>(
     createFormControls(),
   )
-  const [rightAnswerId, setRightAnswerId] = useState(0)
+  const [rightAnswerId, setRightAnswerId] = useState(1)
   const [isValidForm, setIsValidForm] = useState(false)
 
-  // get id from server, if you want to make right sequence
+  // sync QuizzesTotalCount to make right sequence by id
   const [questionId, setQuestionId] = useState(1)
+  useEffect(() => {
+    setQuestionId(quizzesTotalCount)
+  }, [quizzesTotalCount])
 
   // check form validation
   const controls = transformControlsToArray(formControls)
   useEffect(() => {
     setIsValidForm(() => validateForm(...controls))
   }, [controls])
+
+  // clean up
+  const clearInputs = (): void => {
+    setFormControls(createFormControls())
+    setRightAnswerId(1)
+  }
+  const resetFullForm = (): void => {
+    clearInputs()
+    setQuizList([])
+    setIsValidForm(false)
+  }
 
   const handleChangeInput = (
     evt: ChangeEventInput,
@@ -109,19 +129,16 @@ const QuizCreator = () => {
       },
     ])
     setQuestionId(id => id + 1)
-
-    // clear form
-    setFormControls(createFormControls())
-    setRightAnswerId(0)
+    clearInputs()
   }
 
-  // TODO: send to server
   const handleCreateQuiz = (): void => {
-    console.dir(quizList)
+    onPostQuizData(quizList)
+    setTimeout(() => resetFullForm(), 0)
   }
 
   return (
-    <div className={cls.wrapper}>
+    <>
       <h2 className={cls.heading}>Quiz Creator</h2>
 
       <form className={cls.form}>
@@ -172,7 +189,7 @@ const QuizCreator = () => {
           </Button>
         </div>
       </form>
-    </div>
+    </>
   )
 }
 
