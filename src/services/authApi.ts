@@ -6,11 +6,8 @@ import {
   FbSignUpResponse,
 } from '../typings/firebaseAuth'
 
-/*
- * Firebase Public ApiKey
- * replace it with Your ApiKey (if you forked this project)
- */
-const API_KEY = 'AIzaSyCzoEd5g7a0BykR3RqkB2oPgRJW0p7Pc_0'
+// Firebase Public ApiKey
+const API_KEY = process.env.REACT_APP_DB_API_KEY
 
 // axios config
 const BASE_URL = 'https://identitytoolkit.googleapis.com/v1'
