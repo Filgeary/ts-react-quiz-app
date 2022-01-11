@@ -22,10 +22,14 @@ Thumbs.db
 *.ini
 
 # env
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+
+# env webstorm
+*.private.env.json
 
 # logs
 npm-debug.log*
