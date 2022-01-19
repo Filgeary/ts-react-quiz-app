@@ -7,6 +7,7 @@ const BASE_URL =
 export const quizService = createApi({
   reducerPath: 'quizService',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  refetchOnMountOrArgChange: true,
   endpoints: build => ({
     getAllQuizzes: build.query<QuizRecordData, void>({
       query: () => '/quizzes.json',

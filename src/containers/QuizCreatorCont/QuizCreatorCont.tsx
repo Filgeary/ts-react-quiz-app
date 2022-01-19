@@ -2,28 +2,30 @@ import React, { useEffect, useState } from 'react'
 import cls from './QuizCreatorCont.module.css'
 import QuizCreator from '../../components/QuizCreator/QuizCreator'
 import { IQuizServer, PostResponse } from '../../models'
-import { getAllQuizzes, postQuiz } from '../../services/api'
+import { postQuiz } from '../../services/api'
 import Spinner from '../../components/Spinner/Spinner'
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
 import Button from '../../ui/Button/Button'
+import { useGetAllQuizzesQuery } from '../../services/quizService'
 
 const QuizCreatorCont = () => {
+  const {
+    data: allQuizzesData,
+    error: allQuizzesError,
+    refetch: refetchAllQuizzes,
+  } = useGetAllQuizzesQuery()
   const [postResponse, setPostResponse] = useState<PostResponse[] | null>(null)
   const [isPosting, setIsPosting] = useState(false)
   const [isErrorPosting, setIsErrorPosting] = useState(false)
 
   // get Total count of All Quizzes
   const [quizzesTotalCount, setQuizzesTotalCount] = useState(1)
-  const syncQuizzesTotalCount = (): void => {
-    getAllQuizzes()
-      .then(res =>
-        setQuizzesTotalCount(res.data ? Object.keys(res.data).length + 1 : 1),
-      )
-      .catch(err => console.error(err))
-  }
   useEffect(() => {
-    syncQuizzesTotalCount()
-  }, [])
+    if (allQuizzesError) console.error(allQuizzesError)
+    if (allQuizzesData) {
+      setQuizzesTotalCount(Object.keys(allQuizzesData).length + 1)
+    }
+  }, [allQuizzesData, allQuizzesError])
 
   const handlePostResponseLoaded = (response: PostResponse[]): void => {
     setIsPosting(false)
@@ -47,7 +49,7 @@ const QuizCreatorCont = () => {
 
   const handleRetryAgain = (): void => {
     setPostResponse(null)
-    syncQuizzesTotalCount()
+    refetchAllQuizzes()
   }
 
   return (
@@ -58,7 +60,7 @@ const QuizCreatorCont = () => {
         <>
           <p>OK! Your Data have saved.</p>
           <Button onClickButton={handleRetryAgain} variant={'success'}>
-            Add other Quiz
+            Add New Quiz
           </Button>
         </>
       ) : null}
