@@ -7,7 +7,7 @@ import { adaptQuizToClient } from '../../services/adapter'
 import { useGetAllQuizzesQuery } from '../../services/quizService'
 
 const QuizCont = () => {
-  const { data: quizList, error, isLoading } = useGetAllQuizzesQuery(null)
+  const { data: quizList, error, isLoading } = useGetAllQuizzesQuery()
   if (error) console.error(error)
 
   return (

@@ -7,11 +7,11 @@ const BASE_URL =
 export const quizService = createApi({
   reducerPath: 'quizService',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-  endpoints: builder => ({
-    getAllQuizzes: builder.query<QuizRecordData, null>({
+  endpoints: build => ({
+    getAllQuizzes: build.query<QuizRecordData, void>({
       query: () => '/quizzes.json',
     }),
-    getQuizById: builder.query<QuizRecordData, number>({
+    getQuizById: build.query<QuizRecordData, number>({
       query: id => `/quizzes.json?orderBy="id"&equalTo=${id}`,
     }),
   }),
