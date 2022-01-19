@@ -6,7 +6,7 @@ import { IQuiz } from '../../models'
 import Results from '../Results/Results'
 
 type QuizProps = {
-  data: IQuiz[]
+  data: IQuiz[] | undefined
 }
 export type AnswerValue = 'right' | 'wrong'
 export type AnswerRecord = Record<string, AnswerValue>
