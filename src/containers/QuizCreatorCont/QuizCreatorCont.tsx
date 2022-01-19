@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import cls from './QuizCreatorCont.module.css'
 import QuizCreator from '../../components/QuizCreator/QuizCreator'
-import { IQuizServer, PostResponse } from '../../models'
+import { IQuizPostToServer, PostResponse } from '../../models'
 import { postQuiz } from '../../services/api'
 import Spinner from '../../components/Spinner/Spinner'
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
@@ -39,7 +39,7 @@ const QuizCreatorCont = () => {
     console.error(err)
   }
 
-  const handlePostQuizData = (data: IQuizServer[]): void => {
+  const handlePostQuizData = (data: IQuizPostToServer[]): void => {
     setIsPosting(true)
 
     postQuiz(data)

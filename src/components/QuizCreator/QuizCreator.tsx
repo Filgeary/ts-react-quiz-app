@@ -6,7 +6,7 @@ import { IInputControl } from '../../typings'
 import Input from '../../ui/Input/Input'
 import Select from '../../ui/Select/Select'
 import HorizontalSeparator from '../../ui/HorizontalSeparator/HorizontalSeparator'
-import { IQuizServer } from '../../models'
+import { IQuizPostToServer } from '../../models'
 
 type FormControlsKeys =
   | 'question'
@@ -21,7 +21,7 @@ type ChangeEventSelect = React.ChangeEvent<HTMLSelectElement>
 
 type Props = {
   quizzesTotalCount: number
-  onPostQuizData: (data: IQuizServer[]) => void
+  onPostQuizData: (data: IQuizPostToServer[]) => void
 }
 
 const createInputControl = (id: number): IInputControl => {
@@ -56,7 +56,7 @@ const transformControlsToArray = (controls: FormControls): IInputControl[] => {
 
 const QuizCreator = (props: Props) => {
   const { quizzesTotalCount, onPostQuizData } = props
-  const [quizList, setQuizList] = useState([] as IQuizServer[])
+  const [quizList, setQuizList] = useState([] as IQuizPostToServer[])
   const [formControls, setFormControls] = useState<FormControls>(
     createFormControls(),
   )
