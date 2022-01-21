@@ -21,7 +21,7 @@ type ChangeEventSelect = React.ChangeEvent<HTMLSelectElement>
 
 type Props = {
   quizzesTotalCount: number
-  onPostQuizData: (data: IQuizPostToServer[]) => void
+  onPostQuizData: (data: IQuizPostToServer) => void
 }
 
 const createInputControl = (id: number): IInputControl => {
@@ -56,7 +56,7 @@ const transformControlsToArray = (controls: FormControls): IInputControl[] => {
 
 const QuizCreator = (props: Props) => {
   const { quizzesTotalCount, onPostQuizData } = props
-  const [quizList, setQuizList] = useState([] as IQuizPostToServer[])
+  const [quiz, setQuiz] = useState<IQuizPostToServer | null>(null)
   const [formControls, setFormControls] = useState<FormControls>(
     createFormControls(),
   )
@@ -82,7 +82,7 @@ const QuizCreator = (props: Props) => {
   }
   const resetFullForm = (): void => {
     clearInputs()
-    setQuizList([])
+    setQuiz(null)
     setIsValidForm(false)
   }
 
@@ -114,26 +114,23 @@ const QuizCreator = (props: Props) => {
   const handleAddQuestion = (): void => {
     const { question, option1, option2, option3, option4 } = formControls
 
-    setQuizList(prevState => [
-      ...prevState,
-      {
-        question: question.value,
-        id: questionId,
-        correctAnswerID: rightAnswerId,
-        answers: [
-          { id: 1, title: option1.value },
-          { id: 2, title: option2.value },
-          { id: 3, title: option3.value },
-          { id: 4, title: option4.value },
-        ],
-      },
-    ])
+    setQuiz(() => ({
+      question: question.value,
+      id: questionId,
+      correctAnswerID: rightAnswerId,
+      answers: [
+        { id: 1, title: option1.value },
+        { id: 2, title: option2.value },
+        { id: 3, title: option3.value },
+        { id: 4, title: option4.value },
+      ],
+    }))
     setQuestionId(id => id + 1)
     clearInputs()
   }
 
   const handleCreateQuiz = (): void => {
-    onPostQuizData(quizList)
+    if (quiz) onPostQuizData(quiz)
     setTimeout(() => resetFullForm(), 0)
   }
 
@@ -177,15 +174,15 @@ const QuizCreator = (props: Props) => {
             variant={'primary'}
             isDisabled={!isValidForm}
           >
-            Add Question
+            Save Question
           </Button>
           <Button
             onClickButton={handleCreateQuiz}
             variant={'success'}
             cssStyles={cls.mr0}
-            isDisabled={quizList.length === 0}
+            isDisabled={!Boolean(quiz)}
           >
-            Create Quiz
+            Send Quiz to Server
           </Button>
         </div>
       </form>
