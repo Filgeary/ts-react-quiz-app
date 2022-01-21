@@ -6,7 +6,7 @@ type ButtonProps = {
   onClickButton: () => void
   variant: 'primary' | 'success' | 'error'
   isDisabled?: boolean
-  cssStyles?: React.CSSProperties | string
+  cssStyles?: string
 }
 
 const Button = (props: ButtonProps) => {
