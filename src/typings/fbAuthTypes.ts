@@ -21,15 +21,18 @@ export interface FbLogInResponse extends FbSignUpResponse {
 
 // error
 export interface FbAuthError {
-  error: {
-    code: number
-    message: string
-    errors: [
-      {
-        domain: string
-        reason: string
-        message: string
-      },
-    ]
+  status: number
+  data: {
+    error: {
+      code: number
+      message: string
+      errors: [
+        {
+          domain: string
+          reason: string
+          message: string
+        },
+      ]
+    }
   }
 }

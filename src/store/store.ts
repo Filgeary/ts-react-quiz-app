@@ -1,13 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { quizService } from '../services/quizService'
 import { setupListeners } from '@reduxjs/toolkit/query/react'
+import { authService } from '../services/authService'
 
 export const store = configureStore({
   reducer: {
     [quizService.reducerPath]: quizService.reducer,
+    [authService.reducerPath]: authService.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(quizService.middleware),
+    getDefaultMiddleware().concat(
+      quizService.middleware,
+      authService.middleware,
+    ),
 })
 
 setupListeners(store.dispatch)
