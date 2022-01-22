@@ -8,23 +8,30 @@ import AuthCont from '../containers/AuthCont/AuthCont'
 import QuizCreatorCont from '../containers/QuizCreatorCont/QuizCreatorCont'
 import { LogoLink } from '../ui/LogoLink/LogoLink'
 import { AppRoute } from '../constants'
+import { useAppSelector } from '../hooks/hooks'
+import { selectUserEmail } from '../store/slices/authSlice'
 
-const App = () => (
-  <Layout>
-    <header>
-      <LogoLink title={'TS React Quiz app'} />
-      <NavBar />
-    </header>
+const App = () => {
+  const userEmail = useAppSelector(selectUserEmail)
 
-    <main>
-      <Routes>
-        <Route path={AppRoute.HOME} element={<WelcomeScreen />} />
-        <Route path={AppRoute.LOGIN} element={<AuthCont />} />
-        <Route path={AppRoute.QUIZZES} element={<QuizCont />} />
-        <Route path={AppRoute.QUIZ_CREATOR} element={<QuizCreatorCont />} />
-      </Routes>
-    </main>
-  </Layout>
-)
+  return (
+    <Layout>
+      <header>
+        <LogoLink title={'TS React Quiz app'} />
+        <p>Account: {userEmail || 'Guest'}</p>
+        <NavBar />
+      </header>
+
+      <main>
+        <Routes>
+          <Route path={AppRoute.HOME} element={<WelcomeScreen />} />
+          <Route path={AppRoute.LOGIN} element={<AuthCont />} />
+          <Route path={AppRoute.QUIZZES} element={<QuizCont />} />
+          <Route path={AppRoute.QUIZ_CREATOR} element={<QuizCreatorCont />} />
+        </Routes>
+      </main>
+    </Layout>
+  )
+}
 
 export default App
