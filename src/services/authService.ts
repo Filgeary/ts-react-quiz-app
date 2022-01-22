@@ -4,7 +4,7 @@ import {
   FbLogInResponse,
   FbSignUpRequest,
   FbSignUpResponse,
-} from '../typings/firebaseAuth'
+} from '../typings/fbAuthTypes'
 
 // Firebase Public ApiKey
 const API_KEY = process.env.REACT_APP_DB_API_KEY

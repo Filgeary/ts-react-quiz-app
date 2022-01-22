@@ -6,7 +6,7 @@ import {
   FbLogInResponse,
   FbSignUpRequest,
   FbSignUpResponse,
-} from '../../typings/firebaseAuth'
+} from '../../typings/fbAuthTypes'
 import { logIn, signUp } from '../../services/authApi'
 
 const AuthCont = () => {
