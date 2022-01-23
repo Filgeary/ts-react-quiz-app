@@ -1,15 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { authService } from '../../services/authService'
-import { FbLogInResponse } from '../../typings/fbAuthTypes'
+import { FbLogInResponse, FbSignUpResponse } from '../../typings/fbAuthTypes'
 import { RootState } from '../store'
 
 interface State {
-  isAuth: boolean
-  data: Partial<FbLogInResponse>
+  data: FbLogInResponse | FbSignUpResponse
+}
+
+const setAuthDataToLocalStorage = (data: FbSignUpResponse): void => {
+  if (!data) return
+  const expirationDate = new Date().getTime() + Number(data.expiresIn) * 1000
+
+  localStorage.setItem('token', data.idToken)
+  localStorage.setItem('email', data.email)
+  localStorage.setItem('userId', data.localId)
+  localStorage.setItem('expirationDate', String(expirationDate))
+}
+
+const clearAuthDataFromLocalStorage = (): void => {
+  localStorage.removeItem('token')
+  localStorage.removeItem('email')
+  localStorage.removeItem('userId')
+  localStorage.removeItem('expirationDate')
 }
 
 const initialState = {
-  isAuth: false,
   data: {
     idToken: '',
     email: '',
@@ -26,6 +41,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: () => initialState,
+    clearAuthLocalStorage: () => clearAuthDataFromLocalStorage(),
   },
   extraReducers: builder => {
     builder
@@ -38,7 +54,7 @@ const authSlice = createSlice({
         (state, action) => {
           console.log('signup Fulfilled', action)
           state.data = { ...action.payload }
-          state.isAuth = true
+          setAuthDataToLocalStorage(action.payload)
         },
       )
       .addMatcher(authService.endpoints.signup.matchRejected, (_, action) => {
@@ -53,7 +69,7 @@ const authSlice = createSlice({
         (state, action) => {
           console.log('login Fulfilled', action)
           state.data = { ...action.payload }
-          state.isAuth = true
+          setAuthDataToLocalStorage(action.payload)
         },
       )
       .addMatcher(authService.endpoints.login.matchRejected, (_, action) => {
@@ -62,8 +78,10 @@ const authSlice = createSlice({
   },
 })
 
-export const { logout } = authSlice.actions
+export const { logout, clearAuthLocalStorage } = authSlice.actions
 export default authSlice.reducer
 
-export const selectIsAuth = (state: RootState) => state.auth.isAuth
+export const selectIsAuth = (state: RootState) =>
+  Boolean(state.auth.data.idToken)
 export const selectUserEmail = (state: RootState) => state.auth.data.email
+export const selectUserData = (state: RootState) => state.auth.data
