@@ -14,7 +14,8 @@ export const formatTimeDuration = (date: string | number, isAgo: boolean) => {
     difference = date
   }
 
-  if (difference <= 60000) return 'now'
+  // if time remains <= 1min, return different text
+  if (difference <= 60000) return isAgo ? 'now' : 'Time is Over!'
 
   let time = difference
   const SECOND = 1000
