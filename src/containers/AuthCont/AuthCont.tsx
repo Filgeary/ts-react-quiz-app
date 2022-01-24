@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import cls from './AuthCont.module.css'
 import Auth from '../../components/Auth/Auth'
 import { useLoginMutation, useSignupMutation } from '../../services/authService'
 import { FbLogInRequest, FbSignUpRequest } from '../../typings/fbAuthTypes'
 import { useAppSelector } from '../../hooks/hooks'
 import { selectIsAuth } from '../../store/slices/authSlice'
+import { useNavigate } from 'react-router-dom'
+import { AppRoute } from '../../constants'
 
 const AuthCont = () => {
+  const navigate = useNavigate()
   const isAuth = useAppSelector(selectIsAuth)
+  useEffect(() => {
+    if (isAuth) navigate(AppRoute.HOME)
+  }, [isAuth, navigate])
+
   const [
     signup,
     {
@@ -40,7 +47,7 @@ const AuthCont = () => {
 
   return (
     <div className={cls.wrapper}>
-      <Auth isAuth={isAuth} onSignUp={handleSignUp} onLogin={handleLogin} />
+      <Auth onSignUp={handleSignUp} onLogin={handleLogin} />
 
       <p>
         {isSignupPending || isLoginPending

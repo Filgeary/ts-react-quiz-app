@@ -81,8 +81,9 @@ const App = () => {
         <Routes>
           <Route path={AppRoute.HOME} element={<WelcomeScreen />} />
           <Route path={AppRoute.QUIZZES} element={<QuizCont />} />
+          <Route path={AppRoute.LOGIN} element={<AuthCont />} />
 
-          {isAuth ? (
+          {isAuth && (
             <>
               <Route
                 path={AppRoute.QUIZ_CREATOR}
@@ -90,8 +91,6 @@ const App = () => {
               />
               <Route path={AppRoute.LOGOUT} element={<LogoutCont />} />
             </>
-          ) : (
-            <Route path={AppRoute.LOGIN} element={<AuthCont />} />
           )}
         </Routes>
       </main>
