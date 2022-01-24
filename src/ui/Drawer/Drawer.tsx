@@ -19,6 +19,7 @@ const Drawer = (props: Props) => {
         { to: '/', label: 'Home' },
         { to: '/quizzes', label: 'Start Quiz' },
         { to: '/quiz-creator', label: 'Quiz Creator' },
+        { to: '/logout', label: 'Logout' },
       ]
     } else {
       links.current = [

@@ -17,6 +17,7 @@ import {
   selectUserEmail,
 } from '../store/slices/authSlice'
 import { formatTimeDuration } from '../utils/formatTimeDuration'
+import LogoutCont from '../containers/LogoutCont/LogoutCont'
 
 const App = () => {
   const [authTime, setAuthTime] = useState('')
@@ -80,10 +81,17 @@ const App = () => {
         <Routes>
           <Route path={AppRoute.HOME} element={<WelcomeScreen />} />
           <Route path={AppRoute.QUIZZES} element={<QuizCont />} />
-          <Route path={AppRoute.LOGIN} element={<AuthCont />} />
 
-          {isAuth && (
-            <Route path={AppRoute.QUIZ_CREATOR} element={<QuizCreatorCont />} />
+          {isAuth ? (
+            <>
+              <Route
+                path={AppRoute.QUIZ_CREATOR}
+                element={<QuizCreatorCont />}
+              />
+              <Route path={AppRoute.LOGOUT} element={<LogoutCont />} />
+            </>
+          ) : (
+            <Route path={AppRoute.LOGIN} element={<AuthCont />} />
           )}
         </Routes>
       </main>
