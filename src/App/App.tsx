@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../ui/Layout/Layout'
 import QuizCont from '../containers/QuizCont/QuizCont'
 import NavBar from '../ui/NavBar/NavBar'
@@ -15,8 +15,10 @@ import {
   logout,
   selectUserEmail,
 } from '../store/slices/authSlice'
+import { formatTimeDuration } from '../utils/formatTimeDuration'
 
 const App = () => {
+  const [authTime, setAuthTime] = useState('')
   const userEmail = useAppSelector(selectUserEmail)
   const dispatch = useAppDispatch()
 
@@ -32,6 +34,8 @@ const App = () => {
     } else {
       const expirationDate = Number(localStorage.getItem('expirationDate'))
       const timeRemaining = expirationDate - new Date().getTime()
+      const prettyDate = formatTimeDuration(timeRemaining, false)
+      if (prettyDate) setAuthTime(prettyDate)
 
       if (expirationDate && timeRemaining <= 0) {
         dispatch(logout())
@@ -49,6 +53,7 @@ const App = () => {
       <header>
         <LogoLink title={'TS React Quiz app'} />
         <p>Account: {userEmail || 'Guest'}</p>
+        {authTime && <small>Time Auth Remaining: {authTime}</small>}
         <NavBar />
       </header>
 
