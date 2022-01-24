@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { authService } from '../../services/authService'
 import { FbLogInResponse, FbSignUpResponse } from '../../typings/fbAuthTypes'
 import { RootState } from '../store'
@@ -6,21 +6,22 @@ import { RootState } from '../store'
 interface State {
   data: FbLogInResponse | FbSignUpResponse
 }
+type BaseState = Pick<FbSignUpResponse, 'idToken' | 'email' | 'localId'>
 
 const setAuthDataToLocalStorage = (data: FbSignUpResponse): void => {
   if (!data) return
   const expirationDate = new Date().getTime() + Number(data.expiresIn) * 1000
 
-  localStorage.setItem('token', data.idToken)
+  localStorage.setItem('idToken', data.idToken)
   localStorage.setItem('email', data.email)
-  localStorage.setItem('userId', data.localId)
+  localStorage.setItem('localId', data.localId)
   localStorage.setItem('expirationDate', String(expirationDate))
 }
 
 const clearAuthDataFromLocalStorage = (): void => {
-  localStorage.removeItem('token')
+  localStorage.removeItem('idToken')
   localStorage.removeItem('email')
-  localStorage.removeItem('userId')
+  localStorage.removeItem('localId')
   localStorage.removeItem('expirationDate')
 }
 
@@ -42,6 +43,11 @@ const authSlice = createSlice({
   reducers: {
     logout: () => initialState,
     clearAuthLocalStorage: () => clearAuthDataFromLocalStorage(),
+    autoLogin: (state, action: PayloadAction<BaseState>) => {
+      state.data.idToken = action.payload.idToken
+      state.data.email = action.payload.email
+      state.data.localId = action.payload.localId
+    },
   },
   extraReducers: builder => {
     builder
@@ -78,7 +84,7 @@ const authSlice = createSlice({
   },
 })
 
-export const { logout, clearAuthLocalStorage } = authSlice.actions
+export const { logout, clearAuthLocalStorage, autoLogin } = authSlice.actions
 export default authSlice.reducer
 
 export const selectIsAuth = (state: RootState) =>
