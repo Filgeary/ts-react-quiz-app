@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../ui/Layout/Layout'
 import QuizCont from '../containers/QuizCont/QuizCont'
-import NavBar from '../ui/NavBar/NavBar'
+import NavBarCont from '../containers/NavBarCont/NavBarCont'
 import { Route, Routes } from 'react-router-dom'
 import WelcomeScreen from '../components/WelcomeScreen/WelcomeScreen'
 import AuthCont from '../containers/AuthCont/AuthCont'
@@ -20,7 +20,7 @@ import { formatTimeDuration } from '../utils/formatTimeDuration'
 
 const App = () => {
   const [authTime, setAuthTime] = useState('')
-  const userIsAuth = useAppSelector(selectIsAuth)
+  const isAuth = useAppSelector(selectIsAuth)
   const userEmail = useAppSelector(selectUserEmail)
   const dispatch = useAppDispatch()
 
@@ -52,7 +52,7 @@ const App = () => {
       }
     }
     let timerId = setInterval(() => {
-      if (userIsAuth) {
+      if (isAuth) {
         timeRemaining = expirationDate - new Date().getTime()
         if (timeRemaining <= 180000) {
           dispatch(logout())
@@ -65,23 +65,26 @@ const App = () => {
     }, 30000)
 
     return () => clearInterval(timerId)
-  }, [dispatch, userIsAuth])
+  }, [dispatch, isAuth])
 
   return (
     <Layout>
       <header>
         <LogoLink title={'TS React Quiz app'} />
         <p>Account: {userEmail || 'Guest'}</p>
-        {authTime && <small>Time Auth Remaining: {authTime}</small>}
-        <NavBar />
+        {isAuth && authTime && <small>Time Auth Remaining: {authTime}</small>}
+        <NavBarCont />
       </header>
 
       <main>
         <Routes>
           <Route path={AppRoute.HOME} element={<WelcomeScreen />} />
-          <Route path={AppRoute.LOGIN} element={<AuthCont />} />
           <Route path={AppRoute.QUIZZES} element={<QuizCont />} />
-          <Route path={AppRoute.QUIZ_CREATOR} element={<QuizCreatorCont />} />
+          <Route path={AppRoute.LOGIN} element={<AuthCont />} />
+
+          {isAuth && (
+            <Route path={AppRoute.QUIZ_CREATOR} element={<QuizCreatorCont />} />
+          )}
         </Routes>
       </main>
     </Layout>

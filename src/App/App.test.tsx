@@ -69,10 +69,10 @@ describe('Events', () => {
 
     // click on Quiz Creator link & render new screen
     userEvent.click(screen.getByRole('button', { name: /menu ⬇/i }))
-    const link2 = await screen.findByRole('link', { name: /quiz creator/i })
+    const link2 = await screen.findByRole('link', { name: /start quiz/i })
     userEvent.click(link2)
     const heading2 = await screen.findByRole('heading', {
-      name: /quiz creator/i,
+      name: /can you try the quiz\?/i,
     })
     expect(heading2).toBeInTheDocument()
   })

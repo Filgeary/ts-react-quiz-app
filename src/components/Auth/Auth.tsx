@@ -5,17 +5,24 @@ import Input from '../../ui/Input/Input'
 import { IInputControl } from '../../typings'
 import { validateForm, validateInput } from '../../utils'
 import { FbLogInRequest, FbSignUpRequest } from '../../typings/fbAuthTypes'
+import { useNavigate } from 'react-router-dom'
+import { AppRoute } from '../../constants'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>
 type FormEvent = React.FormEvent<HTMLFormElement>
 
 type Props = {
+  isAuth: boolean
   onSignUp: (data: FbSignUpRequest) => void
   onLogin: (data: FbLogInRequest) => void
 }
 
 const Auth = (props: Props) => {
-  const { onSignUp, onLogin } = props
+  const { isAuth, onSignUp, onLogin } = props
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (isAuth) navigate(AppRoute.HOME)
+  }, [isAuth, navigate])
 
   const [emailInput, setEmailInput] = useState<IInputControl>({
     type: 'email',

@@ -3,8 +3,11 @@ import cls from './AuthCont.module.css'
 import Auth from '../../components/Auth/Auth'
 import { useLoginMutation, useSignupMutation } from '../../services/authService'
 import { FbLogInRequest, FbSignUpRequest } from '../../typings/fbAuthTypes'
+import { useAppSelector } from '../../hooks/hooks'
+import { selectIsAuth } from '../../store/slices/authSlice'
 
 const AuthCont = () => {
+  const isAuth = useAppSelector(selectIsAuth)
   const [
     signup,
     {
@@ -37,7 +40,7 @@ const AuthCont = () => {
 
   return (
     <div className={cls.wrapper}>
-      <Auth onSignUp={handleSignUp} onLogin={handleLogin} />
+      <Auth isAuth={isAuth} onSignUp={handleSignUp} onLogin={handleLogin} />
 
       <p>
         {isSignupPending || isLoginPending

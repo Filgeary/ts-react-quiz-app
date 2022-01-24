@@ -3,7 +3,11 @@ import cls from './NavBar.module.css'
 import MenuToggle from '../MenuToggle/MenuToggle'
 import Drawer from '../Drawer/Drawer'
 
-const NavBar = () => {
+interface Props {
+  isAuth: boolean
+}
+
+const NavBar = ({ isAuth }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const handleToggleMenu = (): void => setIsMenuOpen(!isMenuOpen)
@@ -17,7 +21,11 @@ const NavBar = () => {
   return (
     <div className={cls.wrapper} onKeyDown={handleKeyEscape}>
       <MenuToggle isMenuOpen={isMenuOpen} onToggleMenu={handleToggleMenu} />
-      <Drawer isMenuOpen={isMenuOpen} onClickBackdrop={handleClickBackdrop} />
+      <Drawer
+        isAuth={isAuth}
+        isMenuOpen={isMenuOpen}
+        onClickBackdrop={handleClickBackdrop}
+      />
     </div>
   )
 }
