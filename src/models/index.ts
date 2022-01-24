@@ -3,16 +3,16 @@ export interface IQuizAnswer {
   title: string
 }
 
-export interface IQuizServer {
+export interface IQuizPostToServer {
   id: number
   question: string
   correctAnswerID: number
   answers: IQuizAnswer[]
 }
 
-export interface IQuiz extends IQuizServer {
+export interface IQuiz extends IQuizPostToServer {
   hashKey: string
 }
 
-export type QuizRecordData = Record<string, IQuizServer>
-export type PostResponse = Record<'name', string>
+export type QuizRecordData = Record<string, IQuizPostToServer>
+export type PostResponse = Record<'name', string> | null | undefined

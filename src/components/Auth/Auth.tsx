@@ -4,7 +4,7 @@ import Button from '../../ui/Button/Button'
 import Input from '../../ui/Input/Input'
 import { IInputControl } from '../../typings'
 import { validateForm, validateInput } from '../../utils'
-import { FbLogInRequest, FbSignUpRequest } from '../../typings/firebaseAuth'
+import { FbLogInRequest, FbSignUpRequest } from '../../typings/fbAuthTypes'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>
 type FormEvent = React.FormEvent<HTMLFormElement>

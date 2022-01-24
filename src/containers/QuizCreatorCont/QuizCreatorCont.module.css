@@ -1,8 +1,12 @@
 .wrapper {
   display: grid;
   gap: 28px;
-  align-items: center;
+  place-items: center;
   justify-content: center;
   margin: auto;
   padding: 20px 0 40px;
+}
+
+.mr0 {
+  margin-right: 0;
 }

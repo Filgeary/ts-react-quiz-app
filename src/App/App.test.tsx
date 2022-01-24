@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react'
 import App from './App'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { store } from '../store/store'
 
 // sometimes we have to include props that are not really important for a test
 // TypeScript utility types can help with that :)
@@ -18,8 +20,16 @@ import { MemoryRouter } from 'react-router-dom'
 //   return render(<Component {...baseProps} {...props} />);
 // }
 
+const AppWithStoreAndRouter = () => (
+  <Provider store={store}>
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  </Provider>
+)
+
 test('full app rendering/navigating', () => {
-  render(<App />, { wrapper: MemoryRouter })
+  render(<AppWithStoreAndRouter />)
 
   expect(
     screen.getByRole('heading', { name: /ts react quiz app/i }),
@@ -33,7 +43,7 @@ test('full app rendering/navigating', () => {
 
 describe('Events', () => {
   test('opens and closes menu by click', async () => {
-    render(<App />, { wrapper: MemoryRouter })
+    render(<AppWithStoreAndRouter />)
     userEvent.click(screen.getByRole('button', { name: /menu ⬇/i }))
 
     const btnClose = await screen.findByRole('button', { name: /close ❎/i })
@@ -48,7 +58,7 @@ describe('Events', () => {
   })
 
   test('menu navigation', async () => {
-    render(<App />, { wrapper: MemoryRouter })
+    render(<AppWithStoreAndRouter />)
 
     // click on Auth link & render new screen
     userEvent.click(screen.getByRole('button', { name: /menu ⬇/i }))
@@ -59,10 +69,10 @@ describe('Events', () => {
 
     // click on Quiz Creator link & render new screen
     userEvent.click(screen.getByRole('button', { name: /menu ⬇/i }))
-    const link2 = await screen.findByRole('link', { name: /quiz creator/i })
+    const link2 = await screen.findByRole('link', { name: /start quiz/i })
     userEvent.click(link2)
     const heading2 = await screen.findByRole('heading', {
-      name: /quiz creator/i,
+      name: /can you try the quiz\?/i,
     })
     expect(heading2).toBeInTheDocument()
   })

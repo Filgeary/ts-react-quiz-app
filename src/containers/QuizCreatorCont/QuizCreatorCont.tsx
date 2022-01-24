@@ -1,68 +1,77 @@
 import React, { useEffect, useState } from 'react'
 import cls from './QuizCreatorCont.module.css'
 import QuizCreator from '../../components/QuizCreator/QuizCreator'
-import { IQuizServer, PostResponse } from '../../models'
-import { getAllQuizzes, postQuiz } from '../../services/api'
+import { IQuizPostToServer } from '../../models'
 import Spinner from '../../components/Spinner/Spinner'
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
 import Button from '../../ui/Button/Button'
+import {
+  useGetAllQuizzesQuery,
+  usePostQuizMutation,
+} from '../../services/quizService'
+import HorizontalSeparator from '../../ui/HorizontalSeparator/HorizontalSeparator'
 
 const QuizCreatorCont = () => {
-  const [postResponse, setPostResponse] = useState<PostResponse[] | null>(null)
-  const [isPosting, setIsPosting] = useState(false)
-  const [isErrorPosting, setIsErrorPosting] = useState(false)
+  const {
+    data: allQuizzesData,
+    error: allQuizzesError,
+    refetch: refetchAllQuizzes,
+  } = useGetAllQuizzesQuery()
+  const [
+    postQuiz,
+    {
+      data: postQuizResponse,
+      error: postError,
+      isLoading: isPosting,
+      reset: resetPostResponse,
+    },
+  ] = usePostQuizMutation()
 
   // get Total count of All Quizzes
   const [quizzesTotalCount, setQuizzesTotalCount] = useState(1)
-  const syncQuizzesTotalCount = (): void => {
-    getAllQuizzes()
-      .then(res =>
-        setQuizzesTotalCount(res.data ? Object.keys(res.data).length + 1 : 1),
-      )
-      .catch(err => console.error(err))
-  }
   useEffect(() => {
-    syncQuizzesTotalCount()
-  }, [])
+    if (allQuizzesError) console.error(allQuizzesError)
+    if (allQuizzesData) {
+      setQuizzesTotalCount(Object.keys(allQuizzesData).length + 1)
+    }
+  }, [allQuizzesData, allQuizzesError])
 
-  const handlePostResponseLoaded = (response: PostResponse[]): void => {
-    setIsPosting(false)
-    setIsErrorPosting(false)
-    setPostResponse(response)
-  }
-
-  const handlePostError = (err: any): void => {
-    setIsPosting(false)
-    setIsErrorPosting(true)
-    console.error(err)
-  }
-
-  const handlePostQuizData = (data: IQuizServer[]): void => {
-    setIsPosting(true)
-
-    postQuiz(data)
-      .then(res => handlePostResponseLoaded(res))
-      .catch(err => handlePostError(err))
+  const handlePostQuizData = (quiz: IQuizPostToServer): void => {
+    postQuiz(quiz)
   }
 
   const handleRetryAgain = (): void => {
-    setPostResponse(null)
-    syncQuizzesTotalCount()
+    resetPostResponse()
+    refetchAllQuizzes()
   }
+
+  if (postError) console.error(postError)
 
   return (
     <div className={cls.wrapper}>
       {isPosting && <Spinner />}
-      {isErrorPosting && <ErrorMessage />}
-      {postResponse && !isErrorPosting ? (
+      {postError && <ErrorMessage />}
+
+      {postQuizResponse && !postError ? (
         <>
           <p>OK! Your Data have saved.</p>
-          <Button onClickButton={handleRetryAgain} variant={'success'}>
-            Add other Quiz
+          <Button
+            onClickButton={handleRetryAgain}
+            variant={'success'}
+            cssStyles={cls.mr0}
+          >
+            Add New Quiz
           </Button>
+          <HorizontalSeparator />
+
+          <p>Response</p>
+          <pre>
+            <code>{JSON.stringify(postQuizResponse, null, 2)}</code>
+          </pre>
         </>
       ) : null}
-      {!postResponse && !isErrorPosting ? (
+
+      {!postQuizResponse && !postError ? (
         <QuizCreator
           quizzesTotalCount={quizzesTotalCount}
           onPostQuizData={handlePostQuizData}
