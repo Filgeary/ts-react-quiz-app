@@ -13,12 +13,14 @@ import {
   autoLogin,
   clearAuthLocalStorage,
   logout,
+  selectIsAuth,
   selectUserEmail,
 } from '../store/slices/authSlice'
 import { formatTimeDuration } from '../utils/formatTimeDuration'
 
 const App = () => {
   const [authTime, setAuthTime] = useState('')
+  const userIsAuth = useAppSelector(selectIsAuth)
   const userEmail = useAppSelector(selectUserEmail)
   const dispatch = useAppDispatch()
 
@@ -27,14 +29,17 @@ const App = () => {
     const idToken = localStorage.getItem('idToken')
     const email = localStorage.getItem('email')
     const localId = localStorage.getItem('localId')
+    let expirationDate = 0
+    let timeRemaining = 0
+    let prettyDate: string | undefined = ''
 
     if (!idToken) {
       dispatch(logout())
       dispatch(clearAuthLocalStorage())
     } else {
-      const expirationDate = Number(localStorage.getItem('expirationDate'))
-      const timeRemaining = expirationDate - new Date().getTime()
-      const prettyDate = formatTimeDuration(timeRemaining, false)
+      expirationDate = Number(localStorage.getItem('expirationDate'))
+      timeRemaining = expirationDate - new Date().getTime()
+      prettyDate = formatTimeDuration(timeRemaining, false)
       if (prettyDate) setAuthTime(prettyDate)
 
       if (expirationDate && timeRemaining <= 0) {
@@ -46,7 +51,21 @@ const App = () => {
         }
       }
     }
-  }, [dispatch])
+    let timerId = setInterval(() => {
+      if (userIsAuth) {
+        timeRemaining = expirationDate - new Date().getTime()
+        if (timeRemaining <= 180000) {
+          dispatch(logout())
+          dispatch(clearAuthLocalStorage())
+        } else {
+          prettyDate = formatTimeDuration(timeRemaining, false)
+          if (prettyDate) setAuthTime(prettyDate)
+        }
+      }
+    }, 30000)
+
+    return () => clearInterval(timerId)
+  }, [dispatch, userIsAuth])
 
   return (
     <Layout>
