@@ -16,7 +16,7 @@ const Question = ({ id, question, quizzesLength }: PickedProps & Props) => (
       </small>
     </div>
 
-    <p>{question}</p>
+    <p className={cls.question}>{question}</p>
   </section>
 )
 

@@ -99,7 +99,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #fff;
-  background: linear-gradient(90deg, #5041b2 0%, #7969e6 100%);
+  background: linear-gradient(45deg, #5041b2 0%, #7969e6 50%, orangered 100%);
 }
 
 img {
@@ -122,4 +122,14 @@ input[type='radio'].visually-hidden {
   white-space: nowrap;
   clip-path: inset(100%);
   overflow: hidden;
+}
+
+/* custom */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
 }

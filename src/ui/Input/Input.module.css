@@ -3,14 +3,14 @@
 }
 
 .wrapper label {
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   padding: 0;
   display: block;
 }
 
 .wrapper input {
   display: block;
-  padding: 8px 16px;
+  padding: 6px 16px;
   width: 100%;
   border: 1px solid #cccccc;
   border-radius: 4px;
