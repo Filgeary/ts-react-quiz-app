@@ -1,1 +1,6 @@
-/*css*/
+.account {
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #363d54;
+}

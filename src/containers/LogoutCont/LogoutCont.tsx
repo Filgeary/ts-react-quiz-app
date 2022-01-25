@@ -16,7 +16,7 @@ const LogoutCont = () => {
   }
 
   return (
-    <div>
+    <div style={{ textAlign: 'center' }}>
       <Logout onLogout={handleLogout} />
     </div>
   )

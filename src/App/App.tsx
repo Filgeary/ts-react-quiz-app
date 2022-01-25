@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import cls from './App.module.css'
 import Layout from '../ui/Layout/Layout'
 import QuizCont from '../containers/QuizCont/QuizCont'
 import NavBarCont from '../containers/NavBarCont/NavBarCont'
@@ -72,7 +73,7 @@ const App = () => {
     <Layout>
       <header>
         <LogoLink title={'TS React Quiz app'} />
-        <p>Account: {userEmail || 'Guest'}</p>
+        <p className={cls.account}>Account: {userEmail || 'Guest'}</p>
         {isAuth && authTime && <small>Time Auth Remaining: {authTime}</small>}
         <NavBarCont />
       </header>
