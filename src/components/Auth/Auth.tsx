@@ -132,6 +132,7 @@ const Auth = (props: Props) => {
           isTouched={control.isTouched}
           shouldValidate={control.validation.isRequired}
           errorMessage={control.errorMessage}
+          isFocus={idx === 0}
         />
       )
     })

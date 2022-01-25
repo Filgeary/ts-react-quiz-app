@@ -154,6 +154,7 @@ const QuizCreator = (props: Props) => {
                 isTouched={control.isTouched}
                 shouldValidate={control.validation?.isRequired}
                 errorMessage={control.errorMessage}
+                isFocus={idx === 0}
               />
               {idx === 0 && <HorizontalSeparator />}
             </React.Fragment>
