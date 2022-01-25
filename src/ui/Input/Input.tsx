@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import cls from './Input.module.css'
 
 type Props = {
@@ -10,6 +10,7 @@ type Props = {
   isTouched: boolean
   shouldValidate?: boolean
   errorMessage?: string
+  isFocus?: boolean
 }
 
 const isInvalid = ({ isValid, isTouched, shouldValidate }: Partial<Props>) => {
@@ -23,16 +24,27 @@ const Input = (props: Props) => {
     value,
     onChange,
     errorMessage = 'Enter a correct value!',
+    isFocus,
   } = props
   const classes = [cls.wrapper]
   const htmlForValue = `${type}-${Math.random().toFixed(5)}`
+  const refInput = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    if (isFocus) refInput.current?.focus()
+  }, [isFocus])
 
   if (isInvalid(props)) classes.push(cls.invalid)
 
   return (
     <div className={classes.join(' ')}>
       <label htmlFor={htmlForValue}>{label}</label>
-      <input type={type} id={htmlForValue} value={value} onChange={onChange} />
+      <input
+        type={type}
+        id={htmlForValue}
+        value={value}
+        onChange={onChange}
+        ref={refInput}
+      />
 
       {isInvalid(props) && <span>{errorMessage}</span>}
     </div>

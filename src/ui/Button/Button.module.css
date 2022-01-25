@@ -30,9 +30,9 @@
 }
 
 .success {
-  background: rgba(161, 240, 69, 1);
+  background: hsl(88, 85%, 61%);
 }
 
 .error {
-  background: rgba(240, 87, 108, 1);
+  background: hsl(352, 84%, 64%);
 }

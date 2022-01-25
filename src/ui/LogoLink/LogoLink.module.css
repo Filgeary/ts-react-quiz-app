@@ -1,10 +1,11 @@
 .link {
   text-decoration: none;
-  color: #fff;
+  color: #363d54;
+  text-shadow: 3px 3px #2884f6;
 }
 
 .link:hover,
 .link:focus,
 .link:active {
-  color: #fff;
+  color: #5041b2;
 }
