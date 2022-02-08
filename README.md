@@ -29,5 +29,4 @@ Quiz app with possibility of creating new Questions, if User is authorized
 - add new features like
   - different quizzes by topic?
   - custom user data?
-  - statistics?
-- protect Firebase DB better
+  - user progress?
